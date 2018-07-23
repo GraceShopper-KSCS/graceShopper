@@ -15,6 +15,10 @@ const Product = db.define('product', {
     price: {
         type: Sequelize.FLOAT, allowNull: false
     },
+    imageUrl:{
+      type: Sequelize.STRING,
+      defaultValue: 'https://image.flaticon.com/icons/svg/37/37631.svg',
+    },
     quantity: {
         type: Sequelize.INTEGER
     },
