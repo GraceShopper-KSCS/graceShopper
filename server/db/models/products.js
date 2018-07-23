@@ -17,6 +17,9 @@ const Product = db.define('product', {
     },
     quantity: {
         type: Sequelize.INTEGER
+    },
+    category: {
+        type: Sequelize.STRING
     }
 
 });
