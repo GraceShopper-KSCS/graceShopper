@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadProducts } from '../store';
+import { loadProducts } from '../store/products';
 import ProductCard from './productCard'
 
 
@@ -34,7 +34,7 @@ class ProductList extends Component {
 
 const mapDispatchToProps = function (dispatch) {
     return {
-        loadCampuses: () => dispatch(loadProducts())
+        loadProducts: () => dispatch(loadProducts())
     };
 };
 

@@ -38,8 +38,8 @@ export const loadProducts = () => async dispatch => {
 export default function (state = defaultProducts, action) {
     switch (action.type) {
         case GET_PRODUCTS:
-            return action.products
+            return { ...state, products: action.products };
         default:
-            return state
+            return state;
     }
 }
