@@ -48,7 +48,8 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    const book = await Product.findById(req.params.id)
+    const id = req.params.id
+    const book = await Product.findById(id)
     const updatedBook = await book.update(req.body)
     res.json(updatedBook)
   } catch (err) {
@@ -58,7 +59,8 @@ router.put('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   try {
-    const book = await Product.destroy(req.params.id)
+    const id = req.params.id
+    await Product.destroy(id)
     res.sendStatus(204)
   } catch (err) {
     next(err)
