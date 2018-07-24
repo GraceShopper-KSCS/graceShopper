@@ -24,7 +24,7 @@ const getProducts = products => ({ type: GET_PRODUCTS, products })
  */
 export const loadProducts = () => async dispatch => {
     try {
-        const res = await axios.get('api/books')
+        const res = await axios.get('/api/books')
         dispatch(getProducts(res.data))
     } catch (err) {
         console.error(err)
