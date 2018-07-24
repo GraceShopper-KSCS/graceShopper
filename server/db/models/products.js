@@ -23,7 +23,7 @@ const Product = db.define('product', {
         type: Sequelize.INTEGER
     },
     category: {
-        type: Sequelize.STRING
+        type: Sequelize.ARRAY(Sequelize.TEXT)
     }
 
 });
