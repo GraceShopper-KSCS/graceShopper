@@ -50,8 +50,8 @@ router.put('/:userId/reviews/:reviewId', async(req,res,next)=>{
   try{
     const id = req.params.reviewId
     const review = await Review.findById(id)
-    await review.update(req.body)
-    res.json(review)
+    const updatedReview = await review.update(req.body)
+    res.json(updatedReview)
   }catch(err){
     next(err)
   }
