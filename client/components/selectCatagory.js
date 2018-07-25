@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { writeCategory, getSelectCat } from '../store/products'
+import { writeCategory, getSelectCat, loadProducts } from '../store/products'
 import { withRouter } from 'react-router-dom'
 
 class SelectCategory extends Component {
@@ -9,6 +9,11 @@ class SelectCategory extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
+  componentDidMount() {
+    this.props.loadProducts()
+  }
+
   handleChange(event) {
     this.props.writeCategory(event.target.value)
   }
@@ -43,7 +48,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = function (dispatch) {
   return {
     writeCategory: val => dispatch(writeCategory(val)),
-    getSelectCat: (val) => dispatch(getSelectCat(val))
+    getSelectCat: (val) => dispatch(getSelectCat(val)),
+    loadProducts: () => dispatch(loadProducts())
   }
 }
 const ConnectSelectCategory = withRouter(
