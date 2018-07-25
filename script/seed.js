@@ -33,7 +33,7 @@ async function seed() {
         'Every day, more and more people want to learn some HTML and CSS. Joining the professional web designers and programmers are new audiences who need to know a little bit of code at work (update a content management system or e–commerce store) and those who want to make their personal blogs more attractive. Many books teaching HTML and CSS are dry and only written for those who want to become programmers, which is why this book takes an entirely new approach.',
       price: 21.58,
       imageUrl:
-        'https: //i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348805097i/10361330._UY630_SR1200,630_.jpg',
+        'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348805097i/10361330._UY630_SR1200,630_.jpg',
       inventory: 50,
       category: 'HTML'
     }),
