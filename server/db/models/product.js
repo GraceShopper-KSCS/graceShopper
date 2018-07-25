@@ -13,8 +13,14 @@ const Product = db.define('product', {
     type: Sequelize.TEXT
   },
   price: {
-    type: Sequelize.FLOAT,
-    allowNull: false
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    get() {
+      return (0.01 * this.getDataValue('price')).toFixed(2);
+    },
+    set(val) {
+      this.setDataValue('price', val * 100)
+    }
   },
   imageUrl: {
     type: Sequelize.STRING,
@@ -22,10 +28,8 @@ const Product = db.define('product', {
   },
   inventory: {
     type: Sequelize.INTEGER
-  },
-  category: {
-    type: Sequelize.STRING
   }
 })
 
 module.exports = Product
+
