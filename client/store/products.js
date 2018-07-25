@@ -32,7 +32,7 @@ const getSingleProduct = product => ({
 })
 
 export const getSelectCat = val => ({type: GET_SELECTCAT, val})
-const getProducts = products => ({type: GET_PRODUCTS, products})
+
 export const writeCategory = val => ({type: WRITE_CATEGORY, val})
 
 /**
