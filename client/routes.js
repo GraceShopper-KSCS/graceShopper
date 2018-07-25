@@ -23,7 +23,6 @@ class Routes extends Component {
         <Switch>
           {/* Routes placed here are available to all visitors */}
           <Route path="/books" component={ProductList} />
-          <Route path="/add" component={AddProduct} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
 
@@ -31,6 +30,7 @@ class Routes extends Component {
             <Switch>
               {/* Routes placed here are only available after logging in */}
               <Route path="/home" component={UserHome} />
+              <Route path="/add" component={AddProduct} />
             </Switch>
           )}
           {/* Displays our Login component as a fallback */}

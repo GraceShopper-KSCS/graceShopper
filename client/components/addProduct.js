@@ -30,9 +30,18 @@ class AddProduct extends Component {
     try {
       evt.preventDefault()
       if (this.state.imageUrl === '') {
-        this.setState({imageUrl: })
+        const state = this.state
+        await this.props.setProduct({
+          title: state.title,
+          author: state.author,
+          description: state.description,
+          price: state.price,
+          inventory: state.inventory,
+          category: state.category
+        })
+      } else {
+        await this.props.setProduct(this.state)
       }
-      await this.props.setProduct(this.state)
       this.setState({hasSubmitted: true})
     } catch (err) {
       console.error(err)
