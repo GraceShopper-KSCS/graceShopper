@@ -30,5 +30,7 @@ Category.belongsToMany(Product, { through: 'CategoryProduct' })
 
 
 module.exports = {
-  User, Product, Order, Review, ProductOrder
+  User, Product, Order, Review, ProductOrder, Category
+
+
 }
