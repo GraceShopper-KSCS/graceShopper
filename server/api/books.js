@@ -21,20 +21,6 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.get('/filter/:category', async (req, res, next) => {
-  try {
-    const category = req.params.category
-    const books = await Product.findAll({
-      where: {
-        category
-      }
-    })
-    res.json(books)
-  } catch (err) {
-    next(err)
-  }
-})
-
 //Routes only accessible to Admin Users
 
 router.post('/', async (req, res, next) => {
