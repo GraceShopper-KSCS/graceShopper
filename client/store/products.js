@@ -24,8 +24,6 @@ const defaultProducts = {
  * ACTION CREATORS
  */
 
-const getProducts = products => ({type: GET_PRODUCTS, products})
-
 const getSingleProduct = product => ({
   type: GET_SINGLE_PRODUCT,
   product
@@ -33,6 +31,7 @@ const getSingleProduct = product => ({
 
 export const getSelectCat = val => ({type: GET_SELECTCAT, val})
 
+const getProducts = products => ({type: GET_PRODUCTS, products})
 export const writeCategory = val => ({type: WRITE_CATEGORY, val})
 
 /**
@@ -66,6 +65,10 @@ export default function(state = defaultProducts, action) {
     case GET_SINGLE_PRODUCT: {
       return {...state, selectedProduct: action.product}
     }
+    case WRITE_CATEGORY:
+      return {...state, category: action.val}
+    case GET_SELECTCAT:
+      return {...state, selectCategory: action.val}
     default:
       return state
   }
