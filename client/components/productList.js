@@ -12,7 +12,7 @@ class ProductList extends Component {
     let filteredCategory = [];
     if (this.props.selectCategory !== '') {
       filteredCategory = this.props.products.filter(product => {
-        return product.category.includes(this.props.selectCategory.toUpperCase())
+        return product.category.toUpperCase() === this.props.selectCategory.toUpperCase()
       })
     }
 
