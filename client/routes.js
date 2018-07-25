@@ -1,16 +1,21 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Login, Signup, UserHome } from './components'
+import {Login, Signup, UserHome} from './components'
 import ProductList from './components/productList'
 import Navbar from './components/navbar'
 
 
+
+
+
 import AddProduct from './components/addProduct'
-import { me } from './store'
+
 import SingleBook from './components/singleBook'
 
+
+import SingleBook from './components/singleBook'
 
 /**
  * COMPONENT
@@ -21,7 +26,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props
+    const {isLoggedIn} = this.props
 
     return (
       <div>
@@ -41,7 +46,6 @@ class Routes extends Component {
           )}
           {/* Displays our Login component as a fallback */}
           <Route component={Login} />
-
         </Switch>
       </div>
     )
