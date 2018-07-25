@@ -6,12 +6,9 @@ import { Login, Signup, UserHome } from './components'
 import ProductList from './components/productList'
 import Navbar from './components/navbar'
 
-<<<<<<< HEAD
-import { me } from './store'
-=======
+
 import AddProduct from './components/addProduct'
-import {me} from './store'
->>>>>>> master
+import { me } from './store'
 import SingleBook from './components/singleBook'
 
 
