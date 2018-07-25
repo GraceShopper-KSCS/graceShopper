@@ -2,6 +2,7 @@ import React from 'react'
 
 const ProductForm = props => {
   const state = props.state
+  console.log(state)
   return (
     <form onSubmit={props.handleSubmit}>
       <label htmlFor="title">Title:</label>

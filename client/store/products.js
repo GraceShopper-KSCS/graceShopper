@@ -1,5 +1,4 @@
 import axios from 'axios'
-import {runInNewContext} from 'vm'
 
 /**
  * ACTION TYPES
@@ -40,9 +39,9 @@ export const loadProducts = () => async dispatch => {
   }
 }
 
-export const setProduct = () => async dispatch => {
+export const setProduct = product => async dispatch => {
   try {
-    const res = await axios.post('/api/books')
+    const res = await axios.post('/api/books', product)
     dispatch(addProduct(res.data))
   } catch (err) {
     console.error(err)

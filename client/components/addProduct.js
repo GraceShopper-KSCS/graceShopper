@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import ProductForm from './productForm'
-import {addProduct} from '../store/products'
+import {setProduct} from '../store/products'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 
@@ -11,9 +11,9 @@ class AddProduct extends Component {
       title: '',
       author: '',
       description: '',
-      price: 0,
+      price: '',
       imageUrl: '',
-      inventory: 0,
+      inventory: '',
       category: '',
       hasSubmitted: false
     }
@@ -23,13 +23,14 @@ class AddProduct extends Component {
 
   handleChange(evt) {
     this.setState({[evt.target.name]: evt.target.value})
+    console.log('STATE', this.state)
   }
 
   async handleSubmit(evt) {
     try {
       evt.preventDefault()
-      console.log('submitted!')
-      await this.props.addProduct(this.state)
+      console.log(`submitted ${this.state}`)
+      await this.props.setProduct(this.state)
       this.setState({hasSubmitted: true})
     } catch (err) {
       console.error(err)
@@ -51,10 +52,8 @@ class AddProduct extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addProduct: product => dispatch(addProduct(product))
+    setProduct: product => dispatch(setProduct(product))
   }
 }
 
 export default connect(null, mapDispatchToProps)(AddProduct)
-
-//does this component need to be aware of anything from store state??
