@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { loadProducts, getSelectCat } from '../store/products'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {loadProducts, getSelectCat} from '../store/products'
 import ProductCard from './productCard'
 
 class ProductList extends Component {
@@ -9,14 +9,16 @@ class ProductList extends Component {
   }
 
   render() {
-    let filteredCategory = [];
+    let filteredCategory = []
     if (this.props.selectCategory !== '') {
       filteredCategory = this.props.products.filter(product => {
+
         return product.category.toUpperCase() === this.props.selectCategory.toUpperCase()
+
       })
     }
 
-    return (this.props.selectCategory === '') ? (
+    return this.props.selectCategory === '' ? (
       <div>
         <h1>All Books</h1>
         <div>
@@ -26,23 +28,22 @@ class ProductList extends Component {
         </div>
       </div>
     ) : (
+      <div>
+        <h1>{this.props.selectCategory} Books</h1>
         <div>
-          <h1>{this.props.selectCategory} Books</h1>
-          <div>
-            {filteredCategory.map(product => {
-              return <ProductCard key={product.id} product={product} />
-            })}
-          </div>
+          {filteredCategory.map(product => {
+            return <ProductCard key={product.id} product={product} />
+          })}
         </div>
-      )
+      </div>
+    )
   }
 }
 
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function(dispatch) {
   return {
     loadProducts: () => dispatch(loadProducts()),
-    getSelectCat: (val) => dispatch(getSelectCat(val))
-
+    getSelectCat: val => dispatch(getSelectCat(val))
   }
 }
 
