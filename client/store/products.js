@@ -33,12 +33,10 @@ export const addProduct = product => ({
   product
 })
 
-
 const getSingleProduct = product => ({
   type: GET_SINGLE_PRODUCT,
   product
 })
-
 
 /**
  * THUNK CREATORS
@@ -52,21 +50,20 @@ export const loadProducts = () => async dispatch => {
   }
 }
 
-
 export const setProduct = product => async dispatch => {
   try {
     const res = await axios.post('/api/books', product)
     dispatch(addProduct(res.data))
   } catch (err) {
     console.error(err)
-
+  }
+}
 export const fetchProductById = id => async dispatch => {
   try {
     const res = await axios.get(`/api/books/${id}`)
     dispatch(getSingleProduct(res.data))
   } catch (err) {
     console.errpr(err)
-
   }
 }
 
