@@ -16,7 +16,8 @@
     "precommit": "# lint-staged # un-comment to enable",
 
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
-    "postinstall": "touch secrets.js",
+    "postinstall":
+      "touch secrets.js & npm run build-client-watch & npm run start-server",
     "seed": "node script/seed.js",
     "start": "node server",
     "start-dev":
