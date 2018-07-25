@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Product = require('./product')
 
 const ProductOrder = db.define('productorder', {
   unitPrice: {
@@ -12,4 +13,11 @@ const ProductOrder = db.define('productorder', {
     }
   }
 })
+
+ProductOrder.prototype.updateInventory = async function() {
+  const prod = await Product.findById(this.productId)
+  prod.inventory -= this.quantity
+  await prod.update(prod.inventory)
+}
+
 module.exports = ProductOrder
