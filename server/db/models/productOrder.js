@@ -10,6 +10,12 @@ const ProductOrder = db.define('productorder', {
     validate: {
       min: 1
     }
+  },
+  totalPrice: {
+    type: Sequelize.VIRTUAL,
+    get: function() {
+      return this.getDataValue('unitprice') * this.getDataValue('quantity')
+    }
   }
 })
 module.exports = ProductOrder
