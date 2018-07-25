@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logout } from '../store'
+import SelectCategory from './selectCatagory'
+import { getSelectCat } from '../store/products'
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, getSelectCat }) => (
   <div>
-    <h1>BOILERMAKER</h1>
+    <h1>Codebrary</h1>
     <nav>
-      <Link to='/books'>
-        All books
-      </Link>
-
+      <Link to="/books" onClick={getSelectCat('')}>All books</Link>
+      <SelectCategory />
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
@@ -45,7 +45,8 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
-    }
+    },
+    getSelectCat: (val) => dispatch(getSelectCat(val))
   }
 }
 

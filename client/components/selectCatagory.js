@@ -1,37 +1,53 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { writeCategory, getSelectCat } from '../store/products'
+import { withRouter } from 'react-router-dom'
 
-class SelectCatagory extends Component {
+class SelectCategory extends Component {
   constructor() {
     super()
-    this.state = {
-      catagory: ''
-    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
+    this.props.writeCategory(event.target.value)
+  }
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.getSelectCat(this.props.category)
+    // this.props.history.push('/books')
   }
   render() {
-    const catagory = this.state.catagory
+    const category = this.props.category
     return (
       <div>
-        <form>
-          <label>Choose catagory</label>
-          <select name="catagory" value={catagory}>
-            <option value="">Select catagory</option>
-            <option value="beginner">Beginner</option>
-            <option value="html">HTML</option>
+        <form onSubmit={this.handleSubmit}>
+          <label>Choose category</label>
+          <select name="category" onChange={this.handleChange} value={category}>
+            <option value="">Choose Category</option>
+
+            <option value="HTML">HTML</option>
             <option value="css">CSS</option>
             <option value="javascript">Javascript</option>
-            <option value="general">General</option>
-            <option value="experienced">Experienced</option>
-            <option value="intermediate">Intermediate</option>
           </select>
+          <button type="submit">Choose Category</button>
         </form>
       </div>
     )
   }
 }
 
-export default ProductCard
+const mapStateToProps = state => ({
+  category: state.products.category
+})
+const mapDispatchToProps = function (dispatch) {
+  return {
+    writeCategory: val => dispatch(writeCategory(val)),
+    getSelectCat: (val) => dispatch(getSelectCat(val))
+  }
+}
+const ConnectSelectCategory = withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SelectCategory)
+)
+export default ConnectSelectCategory
+

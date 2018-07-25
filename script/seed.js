@@ -34,8 +34,8 @@ async function seed() {
       price: 21.58,
       imageUrl:
         'https: //i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348805097i/10361330._UY630_SR1200,630_.jpg',
-      quantity: 50,
-      category: ['beginner', 'HTML', 'CSS']
+      inventory: 50,
+      category: 'HTML'
     }),
     Product.create({
       title: 'You Don’t Know JS: Up and Going by Kyle Simpson',
@@ -52,8 +52,8 @@ async function seed() {
       price: 2.99,
       imageUrl:
         'https://images-na.ssl-images-amazon.com/images/I/41L18FvA5rL._SX331_BO1,204,203,200_.jpg',
-      quantity: 35,
-      category: ['beginner', 'Javascript']
+      inventory: 35,
+      category: 'Javascript'
     }),
     Product.create({
       title: 'Code: The Hidden Language of Computer Hardware and Software',
@@ -66,8 +66,8 @@ async function seed() {
       price: 20.05,
       imageUrl:
         'https://images-na.ssl-images-amazon.com/images/I/310WZuKyEUL._SX334_BO1,204,203,200_.jpg',
-      quantity: 23,
-      category: ['beginner', 'general']
+      inventory: 23,
+      category: 'General'
     }),
     Product.create({
       title: 'The Pragmatic Programmer: From Journeyman to Master',
@@ -76,8 +76,8 @@ async function seed() {
       price: 16.76,
       imageUrl:
         'https://coderseye.com/wp-content/uploads/the-pragmatic-programmer-andrew-hunt.jpg?x59762',
-      quantity: 18,
-      category: ['beginner', 'intermediate', 'experienced', 'general']
+      inventory: 18,
+      category: 'General'
     })
     // ,
     // Product.create({title: "",
@@ -85,7 +85,7 @@ async function seed() {
     // description: ``,
     // price: ,
     // imageUrl: '',
-    // quantity: ,
+    // inventory: ,
     // category:
     // })
   ])
