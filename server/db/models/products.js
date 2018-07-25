@@ -19,7 +19,7 @@ const Product = db.define('product', {
       type: Sequelize.STRING,
       defaultValue: 'https://image.flaticon.com/icons/svg/37/37631.svg',
     },
-    quantity: {
+    inventory: {
         type: Sequelize.INTEGER
     },
     category: {

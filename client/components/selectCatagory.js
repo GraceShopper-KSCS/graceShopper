@@ -50,3 +50,4 @@ const ConnectSelectCategory = withRouter(
   connect(mapStateToProps, mapDispatchToProps)(SelectCategory)
 )
 export default ConnectSelectCategory
+
