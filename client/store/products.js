@@ -1,6 +1,5 @@
 //client/store/products
 
-
 import axios from 'axios'
 
 /**
@@ -11,16 +10,14 @@ const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 const WRITE_CATEGORY = 'WRITE_CATEGORY'
 const GET_SELECTCAT = 'GET_SELECTCAT'
 
-
 /**
  * INITIAL STATE
  */
 const defaultProducts = {
   products: [],
-  selectedProduct: {}
+  selectedProduct: {},
   category: '',
   selectCategory: ''
-
 }
 
 /**
@@ -34,9 +31,9 @@ const getSingleProduct = product => ({
   product
 })
 
-export const getSelectCat = (val) => ({ type: GET_SELECTCAT, val })
-const getProducts = products => ({ type: GET_PRODUCTS, products })
-export const writeCategory = val => ({ type: WRITE_CATEGORY, val })
+export const getSelectCat = val => ({type: GET_SELECTCAT, val})
+const getProducts = products => ({type: GET_PRODUCTS, products})
+export const writeCategory = val => ({type: WRITE_CATEGORY, val})
 
 /**
  * THUNK CREATORS
@@ -49,7 +46,6 @@ export const loadProducts = () => async dispatch => {
     console.error(err)
   }
 }
-
 
 export const fetchProductById = id => async dispatch => {
   try {
@@ -72,20 +68,22 @@ export default function(state = defaultProducts, action) {
     }
     default:
       return state
-
-/**
- * REDUCER
- */
-export default function (state = defaultProducts, action) {
-  switch (action.type) {
-    case GET_PRODUCTS:
-      return { ...state, products: action.products }
-    case WRITE_CATEGORY:
-      return { ...state, category: action.val }
-    case GET_SELECTCAT:
-      return { ...state, selectCategory: action.val }
-    default:
-      return state;
-
   }
 }
+
+// /**
+//  * REDUCER
+//  */
+// export default function (state = defaultProducts, action) {
+//   switch (action.type) {
+//     case GET_PRODUCTS:
+//       return { ...state, products: action.products }
+//     case WRITE_CATEGORY:
+//       return { ...state, category: action.val }
+//     case GET_SELECTCAT:
+//       return { ...state, selectCategory: action.val }
+//     default:
+//       return state;
+
+//   }
+// }
