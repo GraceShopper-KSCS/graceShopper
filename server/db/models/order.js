@@ -7,10 +7,6 @@ const Order = db.define('order', {
     type: Sequelize.ENUM,
     values: ['pending', 'processing', 'complete'],
     defaultValue: 'pending'
-  },
-  date: {
-    type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW
   }
 })
 Order.prototype.totalPrice = async function() {
