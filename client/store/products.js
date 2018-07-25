@@ -9,6 +9,7 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 const WRITE_CATEGORY = 'WRITE_CATEGORY'
 const GET_SELECTCAT = 'GET_SELECTCAT'
+const ADD_PRODUCT = 'ADD_PRODUCT'
 
 /**
  * INITIAL STATE
@@ -24,15 +25,20 @@ const defaultProducts = {
  * ACTION CREATORS
  */
 
+export const getSelectCat = val => ({type: GET_SELECTCAT, val})
+const getProducts = products => ({type: GET_PRODUCTS, products})
+export const writeCategory = val => ({type: WRITE_CATEGORY, val})
+export const addProduct = product => ({
+  type: ADD_PRODUCT,
+  product
+})
+
+
 const getSingleProduct = product => ({
   type: GET_SINGLE_PRODUCT,
   product
 })
 
-export const getSelectCat = val => ({type: GET_SELECTCAT, val})
-
-const getProducts = products => ({type: GET_PRODUCTS, products})
-export const writeCategory = val => ({type: WRITE_CATEGORY, val})
 
 /**
  * THUNK CREATORS
@@ -46,12 +52,21 @@ export const loadProducts = () => async dispatch => {
   }
 }
 
+
+export const setProduct = product => async dispatch => {
+  try {
+    const res = await axios.post('/api/books', product)
+    dispatch(addProduct(res.data))
+  } catch (err) {
+    console.error(err)
+
 export const fetchProductById = id => async dispatch => {
   try {
     const res = await axios.get(`/api/books/${id}`)
     dispatch(getSingleProduct(res.data))
   } catch (err) {
     console.errpr(err)
+
   }
 }
 
@@ -62,13 +77,19 @@ export default function(state = defaultProducts, action) {
   switch (action.type) {
     case GET_PRODUCTS:
       return {...state, products: action.products}
+
     case GET_SINGLE_PRODUCT: {
       return {...state, selectedProduct: action.product}
     }
+
     case WRITE_CATEGORY:
       return {...state, category: action.val}
     case GET_SELECTCAT:
       return {...state, selectCategory: action.val}
+
+    case ADD_PRODUCT:
+      return {...state, products: [...state.products, action.product]}
+
     default:
       return state
   }
