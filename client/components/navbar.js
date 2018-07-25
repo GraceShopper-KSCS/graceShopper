@@ -1,15 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { logout } from '../store'
 import SelectCategory from './selectCatagory'
+import { getSelectCat } from '../store/products'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({ handleClick, isLoggedIn, getSelectCat }) => (
   <div>
-    <h1>BOILERMAKER</h1>
+    <h1>Codebrary</h1>
     <nav>
-      <Link to="/books">All books</Link>
+      <Link to="/books" onClick={getSelectCat('')}>All books</Link>
       <SelectCategory />
       {isLoggedIn ? (
         <div>
@@ -20,12 +21,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </a>
         </div>
       ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
+          <div>
+            {/* The navbar will show these links before you log in */}
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        )}
     </nav>
     <hr />
   </div>
@@ -44,7 +45,8 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
-    }
+    },
+    getSelectCat: (val) => dispatch(getSelectCat(val))
   }
 }
 

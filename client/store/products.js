@@ -5,20 +5,23 @@ import axios from 'axios'
  */
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const WRITE_CATEGORY = 'WRITE_CATEGORY'
+const GET_SELECTCAT = 'GET_SELECTCAT'
 
 /**
  * INITIAL STATE
  */
 const defaultProducts = {
   products: [],
-  category: ''
+  category: '',
+  selectCategory: ''
 }
 
 /**
  * ACTION CREATORS
  */
-const getProducts = products => ({type: GET_PRODUCTS, products})
-export const writeCategory = val => ({type: WRITE_CATEGORY, val})
+export const getSelectCat = (val) => ({ type: GET_SELECTCAT, val })
+const getProducts = products => ({ type: GET_PRODUCTS, products })
+export const writeCategory = val => ({ type: WRITE_CATEGORY, val })
 /**
  * THUNK CREATORS
  */
@@ -34,13 +37,15 @@ export const loadProducts = () => async dispatch => {
 /**
  * REDUCER
  */
-export default function(state = defaultProducts, action) {
+export default function (state = defaultProducts, action) {
   switch (action.type) {
     case GET_PRODUCTS:
-      return {...state, products: action.products}
+      return { ...state, products: action.products }
     case WRITE_CATEGORY:
-      return {...state, category: action.val}
+      return { ...state, category: action.val }
+    case GET_SELECTCAT:
+      return { ...state, selectCategory: action.val }
     default:
-      return state
+      return state;
   }
 }

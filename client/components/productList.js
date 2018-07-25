@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {loadProducts} from '../store/products'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { loadProducts, getSelectCat } from '../store/products'
 import ProductCard from './productCard'
 
 class ProductList extends Component {
@@ -9,12 +9,16 @@ class ProductList extends Component {
   }
 
   render() {
-    const filteredCategory = this.props.products.filter(product => {
-      return product.category === this.props.category
-    })
-    return this.props.category === '' ? (
+    let filteredCategory = [];
+    if (this.props.selectCategory !== '') {
+      filteredCategory = this.props.products.filter(product => {
+        return product.category.includes(this.props.selectCategory.toUpperCase())
+      })
+    }
+
+    return (this.props.selectCategory === '') ? (
       <div>
-        <h1>AlL Books</h1>
+        <h1>All Books</h1>
         <div>
           {this.props.products.map(product => {
             return <ProductCard key={product.id} product={product} />
@@ -22,27 +26,30 @@ class ProductList extends Component {
         </div>
       </div>
     ) : (
-      <div>
-        <h1>{this.props.category}</h1>
         <div>
-          {filteredCategory.map(product => {
-            return <ProductCard key={product.id} product={product} />
-          })}
+          <h1>{this.props.selectCategory} Books</h1>
+          <div>
+            {filteredCategory.map(product => {
+              return <ProductCard key={product.id} product={product} />
+            })}
+          </div>
         </div>
-      </div>
-    )
+      )
   }
 }
 
-const mapDispatchToProps = function(dispatch) {
+const mapDispatchToProps = function (dispatch) {
   return {
-    loadProducts: () => dispatch(loadProducts())
+    loadProducts: () => dispatch(loadProducts()),
+    getSelectCat: (val) => dispatch(getSelectCat(val))
+
   }
 }
 
 const mapStateToProps = state => ({
   products: state.products.products,
-  category: state.products.category
+  category: state.products.category,
+  selectCategory: state.products.selectCategory
 })
 
 const ConnectProductList = connect(mapStateToProps, mapDispatchToProps)(
