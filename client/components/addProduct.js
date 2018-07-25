@@ -29,7 +29,9 @@ class AddProduct extends Component {
   async handleSubmit(evt) {
     try {
       evt.preventDefault()
-      console.log(`submitted ${this.state}`)
+      if (this.state.imageUrl === '') {
+        this.setState({imageUrl: })
+      }
       await this.props.setProduct(this.state)
       this.setState({hasSubmitted: true})
     } catch (err) {
