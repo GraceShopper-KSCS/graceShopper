@@ -37,7 +37,3 @@ router.post('/', (req, res, next) => {
   }
   res.json(req.session.cart)
 })
-
-// router.put('/', (req, res, next) => {
-//   if()
-// })
