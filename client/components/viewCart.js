@@ -13,7 +13,6 @@ class ViewCart extends Component {
   render() {
     if (this.props.cart.length) {
       return this.props.cart.map(book => {
-        console.log(book)
         return <ProductCard key={book.id} product={book} />
       })
     } else return <h1>Your cart is empty!</h1>

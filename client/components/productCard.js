@@ -11,7 +11,7 @@ class ProductCard extends Component {
 
   render() {
     const product = this.props.product
-    console.log(this.props)
+
     return (
       <div>
         <Link to={`/books/${product.id}`}>
