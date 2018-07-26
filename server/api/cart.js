@@ -31,12 +31,36 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
+  req.body.quantity = 0
   if (req.session.cart) {
     req.session.cart.push(req.body)
   } else {
     req.session.cart = [req.body]
   }
+  console.log(req.session.cart)
   res.json(req.session.cart)
+})
+
+router.put('/decquantity/:id', (req, res, next) => {
+  const id = +req.params.id
+  const product = req.session.cart.find(product => product.id === id)
+  const index = req.session.cart.indexOf(product)
+  req.session.cart[index].quantity--
+  res.json(req.session.cart[index].quantity)
+})
+
+router.put('/incquantity/:id', (req, res, next) => {
+  const id = +req.params.id
+  const product = req.session.cart.find(product => product.id === id)
+  const index = req.session.cart.indexOf(product)
+  if (!req.session.cart[index].quantity) {
+    req.session.cart[index].quantity = 1
+  }
+  else {
+    req.session.cart[index].quantity++
+  }
+  console.log(req.session.cart[index])
+  res.json(req.session.cart[index].quantity)
 })
 
 router.put('/:id', (req, res, next) => {

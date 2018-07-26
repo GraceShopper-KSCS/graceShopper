@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 
 class Quantity extends Component {
     constructor() {
@@ -9,12 +10,20 @@ class Quantity extends Component {
         this.IncrementItem = this.IncrementItem.bind(this)
         this.DecreaseItem = this.DecreaseItem.bind(this)
     }
-    IncrementItem() {
-        this.setState({ clicks: this.state.clicks + 1 });
+    componentDidMount() {
+        this.setState({ clicks: this.props.product.quantity })
     }
 
-    DecreaseItem() {
+    async IncrementItem() {
+        this.setState({ clicks: this.state.clicks + 1 });
+        const res = await axios.put(`/api/cart/incquantity/${this.props.product.id}`)
+        this.setState({ clicks: res.data })
+    }
+
+    async DecreaseItem() {
         this.setState({ clicks: this.state.clicks - 1 });
+        const res = await axios.put(`/api/cart/decquantity/${this.props.product.id}`)
+        this.setState({ clicks: res.data })
     }
 
     render() {
