@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import ProductCard from './productCard'
 import {connect} from 'react-redux'
-import {fetchCart} from '../store/products'
+import {fetchCart} from '../store/cart'
 
 class ViewCart extends Component {
   constructor() {
@@ -13,7 +13,7 @@ class ViewCart extends Component {
   render() {
     if (this.props.cart.length) {
       return this.props.cart.map(book => {
-        return <ProductCard product={book} />
+        return <ProductCard key={book.id} product={book} />
       })
     } else return <h1>Your cart is empty!</h1>
   }
@@ -21,7 +21,7 @@ class ViewCart extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.products.cart
+    cart: state.cart.cart
   }
 }
 
