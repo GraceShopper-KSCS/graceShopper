@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Link, withRouter} from 'react-router-dom'
 
-import {addToCartThunk} from '../store/cart'
+import {addToCartThunk, removeFromCartThunk} from '../store/cart'
 import {connect} from 'react-redux'
 
 class ProductCard extends Component {
@@ -27,7 +27,14 @@ class ProductCard extends Component {
           >
             Add To Cart
           </button>
-        ) : null}
+        ) : (
+          <button
+            type="button"
+            onClick={() => this.props.removeFromCartThunk(product.id)}
+          >
+            Remove from cart
+          </button>
+        )}
       </div>
     )
   }
@@ -35,7 +42,8 @@ class ProductCard extends Component {
 
 const mapDispatchToProps = function(dispatch) {
   return {
-    addToCartThunk: product => dispatch(addToCartThunk(product))
+    addToCartThunk: product => dispatch(addToCartThunk(product)),
+    removeFromCartThunk: productId => dispatch(removeFromCartThunk(productId))
   }
 }
 

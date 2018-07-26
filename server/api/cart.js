@@ -38,3 +38,14 @@ router.post('/', (req, res, next) => {
   }
   res.json(req.session.cart)
 })
+
+router.put('/:id', (req, res, next) => {
+  const id = +req.params.id
+
+  const updatedSession = req.session.cart.filter(product => {
+    return product.id !== id
+  })
+  req.session.cart = updatedSession
+
+  res.json(req.session.cart)
+})
