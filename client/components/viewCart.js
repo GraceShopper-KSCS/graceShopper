@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import ProductCard from './productCard'
 import {connect} from 'react-redux'
-import {fetchCart} from '../store/cart'
+import {fetchCart, emptyCartThunk} from '../store/cart'
 
 class ViewCart extends Component {
   constructor() {
@@ -11,11 +11,21 @@ class ViewCart extends Component {
     await this.props.fetchCart()
   }
   render() {
-    if (this.props.cart.length) {
-      return this.props.cart.map(book => {
-        return <ProductCard key={book.id} product={book} />
-      })
-    } else return <h1>Your cart is empty!</h1>
+    if (!this.props.cart.length) {
+      return <h1>Your cart is empty!</h1>
+    } else {
+      return (
+        <div>
+          <button type="button" onClick={() => this.props.emptyCartThunk()}>
+            Empty Cart
+          </button>
+
+          {this.props.cart.map(book => {
+            return <ProductCard key={book.id} product={book} />
+          })}
+        </div>
+      )
+    }
   }
 }
 
@@ -27,7 +37,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchCart: () => dispatch(fetchCart())
+    fetchCart: () => dispatch(fetchCart()),
+    emptyCartThunk: () => dispatch(emptyCartThunk())
   }
 }
 
