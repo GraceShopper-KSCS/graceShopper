@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-import {Link, withRouter} from 'react-router-dom'
-
-import {addToCartThunk, removeFromCartThunk} from '../store/cart'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import Quantity from './quantity'
+import { addToCartThunk, removeFromCartThunk } from '../store/cart'
+import { connect } from 'react-redux'
 
 class ProductCard extends Component {
   constructor() {
@@ -28,19 +28,22 @@ class ProductCard extends Component {
             Add To Cart
           </button>
         ) : (
-          <button
-            type="button"
-            onClick={() => this.props.removeFromCartThunk(product.id)}
-          >
-            Remove from cart
+            <div>
+              <button
+                type="button"
+                onClick={() => this.props.removeFromCartThunk(product.id)}
+              >
+                Remove from cart
           </button>
-        )}
+              <Quantity />
+            </div>
+          )}
       </div>
     )
   }
 }
 
-const mapDispatchToProps = function(dispatch) {
+const mapDispatchToProps = function (dispatch) {
   return {
     addToCartThunk: product => dispatch(addToCartThunk(product)),
     removeFromCartThunk: productId => dispatch(removeFromCartThunk(productId))
