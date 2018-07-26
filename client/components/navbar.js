@@ -5,16 +5,17 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import SelectCategory from './selectCatagory'
 import {getSelectCat} from '../store/products'
+import {getCart} from '../store/products'
 
 const Navbar = ({handleClick, isLoggedIn, getSelectCat}) => (
   <div>
     <h1>Codebrary</h1>
     <nav>
-
-
       <Link to="/books" onClick={() => getSelectCat('')}>
-
         All books
+      </Link>
+      <Link to="/cart" onClick={() => getCart()}>
+        View Cart{' '}
       </Link>
       <SelectCategory />
       {isLoggedIn ? (

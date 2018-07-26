@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product} = require('../server/db/models')
+const {User, Product, Category} = require('../server/db/models')
 
 /**
  * Welcome to the seed file! This seed file uses a newer language feature called...
@@ -25,6 +25,34 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'}),
     User.create({email: 'admin@email.com', password: 'admin', admin: true})
   ])
+  const categories = await Promise.all([
+    Category.create({name: 'css'}),
+    Category.create({name: 'javascript'}),
+    Category.create({name: 'python'})
+  ])
+  const newBook = await Product.create({
+    title: 'HTML & XHTML: The Definitive Guide',
+    author: 'Chuck Musciano',
+    description: `Put everthing you need to know about HTML & XHTML at your fingertips. For nearly a decade, hundreds of thousands of web developers have turned to HTML & XHTML: The Definitive Guide to master standards-based web development. Truly a definitive guide, the book combines a unique balance of tutorial material with a comprehensive reference that even the most experienced web professionals keep close at hand. From basic syntax and semantics to guidelines aimed at helping you develop your own distinctive style, this classic is all you need to become fluent in the language of web design.
+
+    The new sixth edition guides you through every element of HTML and XHTML in detail, explaining how each element works and how it interacts with other elements. You'll also find detailed discussions of CSS (Cascading Style Sheets), which is intricately related to web page development. The most all-inclusive, up-to-date book on these languages available, this edition covers HTML 4.01, XHTML 1.0, and CSS2, with a preview of the upcoming XHTML2 and CSS3. Other topics include the newer initiatives in XHTML (XForms, XFrames, and modularization) and the essentials of XML for advanced readers. You'll learn how to:
+
+    Use style sheets to control your document's appearance
+    Work with programmatically generated HTML
+    Create tables, both simple and complex
+    Use frames to coordinate sets of documents
+    Design and build interactive forms and dynamic documents
+    Insert images, sound files, video, Java applets, and JavaScript programs
+    Create documents that look good on a variety of browsers`,
+    price: 14.95,
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/51vYMYLZiuL._SX386_BO1,204,203,200_.jpg',
+    inventory: 33,
+    category: 'HTML'
+  })
+  const html = await Category.create({name: 'html'})
+
+  await html.addProduct(newBook)
 
   const products = await Promise.all([
     Product.create({
@@ -33,7 +61,8 @@ async function seed() {
       description:
         'Every day, more and more people want to learn some HTML and CSS. Joining the professional web designers and programmers are new audiences who need to know a little bit of code at work (update a content management system or e–commerce store) and those who want to make their personal blogs more attractive. Many books teaching HTML and CSS are dry and only written for those who want to become programmers, which is why this book takes an entirely new approach.',
       price: 21.58,
-      imageUrl:'https://dzvfs5sz5rprz.cloudfront.net/media/catalog/product/cache/1/image/1200x/040ec09b1e35df139433887a97daa66f/h/t/html_and_css_design_and_build_websites_book_1st_edition-1.jpg',
+      imageUrl:
+        'https://dzvfs5sz5rprz.cloudfront.net/media/catalog/product/cache/1/image/1200x/040ec09b1e35df139433887a97daa66f/h/t/html_and_css_design_and_build_websites_book_1st_edition-1.jpg',
 
       inventory: 50,
       category: 'HTML'
@@ -92,7 +121,11 @@ async function seed() {
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${users.length} users and ${products.length} products`)
+  console.log(
+    `seeded ${users.length} users, ${categories.length} categories and ${
+      products.length
+    } products`
+  )
   console.log(`seeded successfully`)
 }
 

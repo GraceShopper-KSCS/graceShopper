@@ -9,6 +9,7 @@ import Navbar from './components/navbar'
 import AddProduct from './components/addProduct'
 import {me} from './store'
 import SingleBook from './components/singleBook'
+import viewCart from './components/viewCart'
 
 /**
  * COMPONENT
@@ -29,6 +30,7 @@ class Routes extends Component {
           <Route path="/books/:id" component={SingleBook} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/cart" component={viewCart} />
 
           {isLoggedIn && (
             <Switch>
@@ -38,7 +40,8 @@ class Routes extends Component {
             </Switch>
           )}
           {/* Displays our Login component as a fallback */}
-          <Route component={Login} />
+          <Redirect to="/books" />
+          {/* <Route component={Login} /> */}
         </Switch>
       </div>
     )
