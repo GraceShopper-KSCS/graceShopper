@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
+import AddToCart from './addToCartButton'
 
 class ProductCard extends Component {
   constructor() {
@@ -16,6 +17,7 @@ class ProductCard extends Component {
         <Link to={`/books/${product.id}`}>
           <img src={product.imageUrl} />
         </Link>
+        <AddToCart />
       </div>
     )
   }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProductById} from '../store/products'
+import AddToCart from './addToCartButton'
 
 class SingleBook extends Component {
   componentDidMount() {
@@ -22,6 +23,7 @@ class SingleBook extends Component {
         <h5>By: {author}</h5>
         <h5>Price: {price}</h5>
         <div>
+          <AddToCart />
           <div className="bigPicture">
             <img src={imageUrl} />
           </div>
