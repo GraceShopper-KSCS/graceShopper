@@ -7,9 +7,9 @@ import {Redirect} from 'react-router-dom'
 const App = () => {
   return (
     <div>
-      <Redirect to="/books" />
       <Navbar />
       <Routes />
+      {/* <Redirect to="/books" /> */}
     </div>
   )
 }

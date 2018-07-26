@@ -2,6 +2,7 @@ const router = require('express').Router()
 
 module.exports = router
 const dummyBook = {
+  id: '88',
   title: 'HTML & XHTML: The Definitive Guide',
   author: 'Chuck Musciano',
   description: `Put everthing you need to know about HTML & XHTML at your fingertips. For nearly a decade, hundreds of thousands of web developers have turned to HTML & XHTML: The Definitive Guide to master standards-based web development. Truly a definitive guide, the book combines a unique balance of tutorial material with a comprehensive reference that even the most experienced web professionals keep close at hand. From basic syntax and semantics to guidelines aimed at helping you develop your own distinctive style, this classic is all you need to become fluent in the language of web design.

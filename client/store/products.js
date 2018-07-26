@@ -1,7 +1,6 @@
 //client/store/products
 
 import axios from 'axios'
-import {runInNewContext} from 'vm'
 
 /**
  * ACTION TYPES
@@ -12,7 +11,6 @@ const WRITE_CATEGORY = 'WRITE_CATEGORY'
 const GET_SELECTCAT = 'GET_SELECTCAT'
 const GET_FILTERED = 'GET_FILTERED'
 const ADD_PRODUCT = 'ADD_PRODUCT'
-const GET_CART = 'GET_CART'
 
 /**
  * INITIAL STATE
@@ -23,8 +21,7 @@ const defaultProducts = {
   selectedProduct: {},
   category: '',
   selectCategory: '',
-  filtered: [],
-  cart: []
+  filtered: []
 }
 
 /**
@@ -49,10 +46,6 @@ export const getFiltered = filtered => ({
   filtered
 })
 
-export const getCart = cart => ({
-  type: GET_CART,
-  cart
-})
 /**
  * THUNK CREATORS
  */
@@ -91,15 +84,6 @@ export const fetchFilteredProducts = category => async dispatch => {
   }
 }
 
-export const fetchCart = () => async dispatch => {
-  try {
-    const res = await axios.get('/api/cart')
-    dispatch(getCart(res.data))
-  } catch (err) {
-    console.error(err)
-  }
-}
-
 /**
  * REDUCER
  */
@@ -119,29 +103,8 @@ export default function(state = defaultProducts, action) {
 
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
-    case GET_CART:
-      return {
-        ...state,
-        cart: action.cart
-      }
+
     default:
       return state
   }
 }
-
-// /**
-//  * REDUCER
-//  */
-// export default function (state = defaultProducts, action) {
-//   switch (action.type) {
-//     case GET_PRODUCTS:
-//       return { ...state, products: action.products }
-//     case WRITE_CATEGORY:
-//       return { ...state, category: action.val }
-//     case GET_SELECTCAT:
-//       return { ...state, selectCategory: action.val }
-//     default:
-//       return state;
-
-//   }
-// }
