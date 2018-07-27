@@ -35,7 +35,7 @@ class ProductCard extends Component {
               >
                 Remove from cart
           </button>
-              <Quantity />
+              <Quantity product={product} />
             </div>
           )}
       </div>
