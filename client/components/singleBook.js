@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {fetchProductById, fetchReviews} from '../store/products'
 import Reviews from './reviews'
 
+import {addToCartThunk} from '../store/cart'
+
 class SingleBook extends Component {
   componentDidMount() {
     this.props.fetchProductById(this.props.match.params.id)
@@ -25,6 +27,15 @@ class SingleBook extends Component {
         <h5>By: {author}</h5>
         <h5>Price: {price}</h5>
         <div>
+          <button
+            type="button"
+            onClick={() =>
+              this.props.addToCartThunk(this.props.selectedProduct)
+            }
+          >
+            Add To Cart
+          </button>
+
           <div className="bigPicture">
             <img src={imageUrl} />
           </div>
@@ -46,7 +57,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = function(dispatch) {
   return {
     fetchProductById: id => dispatch(fetchProductById(id)),
-    fetchReviews: id => dispatch(fetchReviews(id))
+    fetchReviews: id => dispatch(fetchReviews(id)),
+    addToCartThunk: product => dispatch(addToCartThunk(product))
   }
 }
 
