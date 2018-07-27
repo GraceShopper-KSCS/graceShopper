@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product, Category} = require('../server/db/models')
+const {User, Product, Category, Review} = require('../server/db/models')
 
 /**
  * Welcome to the seed file! This seed file uses a newer language feature called...
@@ -30,6 +30,57 @@ async function seed() {
     Category.create({name: 'javascript'}),
     Category.create({name: 'python'})
   ])
+  const reviews = await Promise.all([
+    Review.create({
+      title: 'Enjoyed this Code Book',
+      content:
+        'Okay I have read a lot of development and code books and while there are a lot of good ones out there, I would say this has been one of my favorites. The author has done very well in explaining conceptually and with practical application and use of the development process and understanding syntax of HTML and CSS. Love it!',
+      rating: 1
+    }),
+
+    Review.create({
+      title:
+        'Yes, for beginners: Large font and illustrations make for easy reading',
+      content: 'Just as the subtitle describes "for complete beginners',
+      rating: 3
+    }),
+    Review.create({
+      title: 'Terrific basic book',
+      content:
+        'This book is a pleasure to read. Most technical books take some intestinal fortitude to slog through the boring parts, and reflect the geeky mentality of their authors.',
+      rating: 2.5
+    }),
+    Review.create({
+      title: 'Outdated',
+      content: 'The book was outdated.',
+      rating: 0
+    }),
+    Review.create({
+      title: 'Lifesaver!',
+      content:
+        'Several years later I finally got around to reading it cover to cover (I took a class) and let me tell you I could not have gotten by without this book.',
+      rating: 4
+    }),
+    Review.create({
+      title: 'Mind-Blowing content.... for front end developers',
+      content:
+        'There was soooo much new stuff in this book that I didnot find on youtube tutorials. ',
+      rating: 4.5
+    }),
+    Review.create({
+      title: 'Excellent Instruction',
+      content:
+        'I really like this book. A lot. The information is fantastic and will have you rolling in no time, but the layout really is something else. This is one of the most pleasantly designed books I have ever encountered and I do a ton of reading.',
+      rating: 5
+    }),
+    Review.create({
+      title: 'Love the book but needs an update',
+      content:
+        'I absolutely loved this book, so well-written and and such a nice print.',
+      rating: 4
+    })
+  ])
+
   const newBook = await Product.create({
     title: 'HTML & XHTML: The Definitive Guide',
     author: 'Chuck Musciano',
@@ -53,6 +104,7 @@ async function seed() {
   const html = await Category.create({name: 'html'})
 
   await html.addProduct(newBook)
+  // await newBook.addReview(review1)
 
   const products = await Promise.all([
     Product.create({
@@ -122,9 +174,9 @@ async function seed() {
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
   console.log(
-    `seeded ${users.length} users, ${categories.length} categories and ${
-      products.length
-    } products`
+    `seeded ${users.length} users,${reviews.length} reviews, ${
+      categories.length
+    } categories and ${products.length} products`
   )
   console.log(`seeded successfully`)
 }
@@ -136,6 +188,28 @@ async function runSeed() {
   console.log('seeding...')
   try {
     await seed()
+
+    const reviews = await Review.findAll()
+    const products = await Product.findAll()
+    const review1 = reviews[0].setProduct(products[0])
+    const review2 = reviews[1].setProduct(products[1])
+    const review3 = reviews[2].setProduct(products[2])
+    const review4 = reviews[3].setProduct(products[3])
+    const review5 = reviews[4].setProduct(products[3])
+    const review6 = reviews[5].setProduct(products[2])
+    const review7 = reviews[6].setProduct(products[1])
+    const review8 = reviews[7].setProduct(products[0])
+
+    await Promise.all([
+      review1,
+      review2,
+      review3,
+      review4,
+      review5,
+      review6,
+      review7,
+      review8
+    ])
   } catch (err) {
     console.error(err)
     process.exitCode = 1

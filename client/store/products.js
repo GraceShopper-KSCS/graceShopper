@@ -13,6 +13,9 @@ const GET_SELECTCAT = 'GET_SELECTCAT'
 const GET_FILTERED = 'GET_FILTERED'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const GET_CART = 'GET_CART'
+const GET_REVIEWS = 'GET_REVIEWS'
+const CREATE_REVIEWS = 'CREATE_REVIEWS'
+const DELETE_REVIEWS = 'DELETE_REVIEWS'
 
 /**
  * INITIAL STATE
@@ -24,7 +27,8 @@ const defaultProducts = {
   category: '',
   selectCategory: '',
   filtered: [],
-  cart: []
+  cart: [],
+  review: []
 }
 
 /**
@@ -52,6 +56,18 @@ export const getFiltered = filtered => ({
 export const getCart = cart => ({
   type: GET_CART,
   cart
+})
+export const getReviews = reviews => ({
+  type: GET_REVIEWS,
+  reviews
+})
+export const createReview = reviews => ({
+  type: CREATE_REVIEWS,
+  reviews
+})
+export const deleteReview = reviews => ({
+  type: DELETE_REVIEWS,
+  reviews
 })
 /**
  * THUNK CREATORS
@@ -100,6 +116,33 @@ export const fetchCart = () => async dispatch => {
   }
 }
 
+export const fetchReviews = id => async dispatch => {
+  try {
+    const res = await axios.get(`/api/reviews/${id}`)
+    dispatch(getReviews(res.data))
+  } catch (err) {
+    console.error('Fetching reviews unsuccessful', err)
+  }
+}
+
+export const addReview = reviews => async dispatch => {
+  try {
+    const res = await axios.post('/api/reviews', reviews)
+    dispatch(createReview(res.data))
+  } catch (err) {
+    console.error(`Creating reviews: ${reviews} unsuccessful`, err)
+  }
+}
+
+export const removeReview = id => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/reviews/${id}`)
+    dispatch(deleteReview(res.data))
+  } catch (err) {
+    console.error(`Removing review: ${id} unsuccessful`, err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -111,19 +154,23 @@ export default function(state = defaultProducts, action) {
     case GET_SINGLE_PRODUCT: {
       return {...state, selectedProduct: action.product}
     }
-
     case WRITE_CATEGORY:
       return {...state, category: action.val}
     case GET_SELECTCAT:
       return {...state, selectCategory: action.val}
-
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
     case GET_CART:
-      return {
-        ...state,
-        cart: action.cart
-      }
+      return {...state, cart: action.cart}
+    case GET_REVIEWS: {
+      return {...state, review: action.reviews}
+    }
+    case CREATE_REVIEWS: {
+      return {...state, review: action.reviews}
+    }
+    case DELETE_REVIEWS: {
+      return {...state.filter(review => review.id !== action.review.id)}
+    }
     default:
       return state
   }
