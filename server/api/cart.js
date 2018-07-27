@@ -31,7 +31,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  req.body.quantity = 0
+  req.body.quantity = 1
   if (req.session.cart) {
     req.session.cart.push(req.body)
   } else {

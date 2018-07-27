@@ -30,7 +30,7 @@ class Quantity extends Component {
         return (
             <div>
                 <button onClick={this.IncrementItem}>+</button>
-                <button disabled={this.state.clicks <= 0} onClick={this.DecreaseItem}>-</button>
+                <button disabled={this.state.clicks <= 1} onClick={this.DecreaseItem}>-</button>
                 <h2>{this.state.clicks}</h2>
             </div>
         );
