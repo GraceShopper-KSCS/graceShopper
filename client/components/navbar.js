@@ -4,16 +4,19 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import SelectCategory from './selectCatagory'
-import {getSelectCat} from '../store/products'
+import {getSelectCat, fetchCategories, fetchFiltered} from '../store/products'
 
-const Navbar = ({handleClick, isLoggedIn, getSelectCat}) => (
+const Navbar = ({handleClick, isLoggedIn, getSelectCat, fetchFiltered}) => (
   <div>
     <h1>Codebrary</h1>
     <nav>
-
-
-      <Link to="/books" onClick={() => getSelectCat('')}>
-
+      <Link
+        to="/books"
+        onClick={() => {
+          getSelectCat('')
+          fetchFiltered('')
+        }}
+      >
         All books
       </Link>
       <SelectCategory />
@@ -51,7 +54,8 @@ const mapDispatch = dispatch => {
     handleClick() {
       dispatch(logout())
     },
-    getSelectCat: val => dispatch(getSelectCat(val))
+    getSelectCat: val => dispatch(getSelectCat(val)),
+    fetchFiltered: category => dispatch(fetchFiltered(category))
   }
 }
 
