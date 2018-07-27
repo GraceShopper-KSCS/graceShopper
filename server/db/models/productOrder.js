@@ -4,6 +4,10 @@ const db = require('../db')
 const ProductOrder = db.define('productorder', {
   unitPrice: {
     type: Sequelize.INTEGER
+
+    // set(val) {
+    //   this.setDataValue('price', val * 100)
+    // }
   },
   quantity: {
     type: Sequelize.INTEGER,

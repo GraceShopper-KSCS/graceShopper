@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const {Order, Product} = require('../db/models/')
 
 module.exports = router
 // const dummyBook = {
@@ -23,20 +24,39 @@ module.exports = router
 //   category: 'HTML'
 // }
 
-router.get('/', (req, res, next) => {
-  if (!req.session.cart) {
-    req.session.cart = []
+router.get('/', async (req, res, next) => {
+  try {
+    if (req.user) {
+      console.log('req.user***', req.user.dataValues.id)
+      const orders = await Order.findAll({
+        where: {
+          userId: req.user.dataValues.id,
+          status: 'pending'
+        },
+        include: [{model: Product}]
+      })
+      res.json(orders[0].products)
+    } else {
+      if (!req.session.cart) {
+        req.session.cart = []
+      }
+      res.json(req.session.cart)
+    }
+  } catch (err) {
+    next(err)
   }
-  res.json(req.session.cart)
 })
 
 router.post('/', (req, res, next) => {
-  if (req.session.cart) {
-    req.session.cart.push(req.body)
-  } else {
-    req.session.cart = [req.body]
-  }
-  res.json(req.session.cart)
+  // if(req.user){
+  // } else{
+  //   if (req.session.cart) {
+  //     req.session.cart.push(req.body)
+  //   } else {
+  //     req.session.cart = [req.body]
+  //   }
+  //   res.json(req.session.cart)
+  // }
 })
 
 router.put('/:id', (req, res, next) => {

@@ -1,7 +1,13 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product, Category} = require('../server/db/models')
+const {
+  User,
+  Product,
+  Category,
+  Order,
+  ProductOrder
+} = require('../server/db/models')
 
 /**
  * Welcome to the seed file! This seed file uses a newer language feature called...
@@ -21,10 +27,12 @@ async function seed() {
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
     User.create({email: 'murphy@email.com', password: '123'}),
     User.create({email: 'admin@email.com', password: 'admin', admin: true})
   ])
+
+  const cody = await User.create({email: 'cody@email.com', password: '123'})
+
   const categories = await Promise.all([
     Category.create({name: 'css'}),
     Category.create({name: 'javascript'}),
@@ -44,7 +52,7 @@ async function seed() {
     Design and build interactive forms and dynamic documents
     Insert images, sound files, video, Java applets, and JavaScript programs
     Create documents that look good on a variety of browsers`,
-    price: 14.95,
+    price: 1495,
     imageUrl:
       'https://images-na.ssl-images-amazon.com/images/I/51vYMYLZiuL._SX386_BO1,204,203,200_.jpg',
     inventory: 33,
@@ -121,11 +129,24 @@ async function seed() {
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(
-    `seeded ${users.length} users, ${categories.length} categories and ${
-      products.length
-    } products`
-  )
+
+  const order1 = await Order.create({
+    status: 'pending',
+    userId: 3
+  })
+  const order1Line = await ProductOrder.create({
+    orderId: order1.id,
+    quantity: '3',
+    productId: 1,
+    unitPrice: 1495
+  })
+
+  // order1.addProduct(newBook)
+  // console.log(
+  //   `seeded ${users.length} users, ${categories.length} categories and ${
+  //     products.length
+  //   } products`
+  // )
   console.log(`seeded successfully`)
 }
 
