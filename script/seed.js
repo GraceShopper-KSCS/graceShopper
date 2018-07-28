@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product, Category} = require('../server/db/models')
+const {User, Product, Category, Order} = require('../server/db/models')
 
 /**
  * Welcome to the seed file! This seed file uses a newer language feature called...
@@ -21,7 +21,7 @@ async function seed() {
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
+    User.create({email: '6', password: '123'}),
     User.create({email: 'murphy@email.com', password: '123'}),
     User.create({email: 'admin@email.com', password: 'admin', admin: true})
   ])
@@ -30,6 +30,14 @@ async function seed() {
     Category.create({name: 'javascript'}),
     Category.create({name: 'python'})
   ])
+
+  const orders = await Promise.all([
+    Order.create({type: 'complete', userId: 1}),
+    Order.create({type: 'processing', userId: 2}),
+    Order.create({type: 'pending', userId: 1}),
+    Order.create({type: 'complete', userId: 2})
+  ])
+
   const newBook = await Product.create({
     title: 'HTML & XHTML: The Definitive Guide',
     author: 'Chuck Musciano',
