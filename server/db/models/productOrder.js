@@ -5,9 +5,12 @@ const ProductOrder = db.define('productorder', {
   unitPrice: {
     type: Sequelize.INTEGER
 
+<<<<<<< HEAD
     // set(val) {
     //   this.setDataValue('price', val * 100)
     // }
+=======
+>>>>>>> master
   },
   quantity: {
     type: Sequelize.INTEGER,
@@ -17,7 +20,7 @@ const ProductOrder = db.define('productorder', {
   },
   totalPrice: {
     type: Sequelize.VIRTUAL,
-    get: function() {
+    get: function () {
       return this.getDataValue('unitprice') * this.getDataValue('quantity')
     }
   }

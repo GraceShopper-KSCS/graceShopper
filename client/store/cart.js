@@ -8,6 +8,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const EMPTY_CART = 'EMPTY_CART'
 
+
 /**
  * INITIAL STATE
  */
@@ -24,7 +25,7 @@ export const getCart = cart => ({
   cart
 })
 
-export const addToCart = product => ({type: ADD_TO_CART, product})
+export const addToCart = product => ({ type: ADD_TO_CART, product })
 
 export const removeFromCart = updatedCart => ({
   type: REMOVE_FROM_CART,
@@ -79,7 +80,7 @@ export const emptyCartThunk = () => async dispatch => {
  * REDUCER
  */
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case GET_CART:
       return {
@@ -87,13 +88,13 @@ export default function(state = initialState, action) {
         cart: action.cart
       }
     case ADD_TO_CART: {
-      return {...state, cart: [...state.cart, action.product]}
+      return { ...state, cart: [...state.cart, action.product] }
     }
     case REMOVE_FROM_CART: {
-      return {...state, cart: action.updatedCart}
+      return { ...state, cart: action.updatedCart }
     }
     case EMPTY_CART: {
-      return {...state, cart: []}
+      return { ...state, cart: [] }
     }
     default:
       return state
