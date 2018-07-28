@@ -14,7 +14,16 @@ class ViewCart extends Component {
   }
   render() {
     if (!this.props.cart.length) {
-      return <h1>Your cart is empty!</h1>
+      return (
+        <div>
+          <Link to="/orders/history">
+            <button type="button" onClick={() => this.props.getHistoryThunk()}>
+              See Order History
+            </button>
+          </Link>
+          <h1>Your cart is empty!</h1>
+        </div>
+      )
     } else {
       return (
         <div>
