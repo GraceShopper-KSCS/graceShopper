@@ -141,6 +141,13 @@ async function seed() {
     unitPrice: 1495
   })
 
+  const order1Line2 = await ProductOrder.create({
+    orderId: order1.id,
+    quantity: '1',
+    productId: 2,
+    unitPrice: 2158
+  })
+
   // order1.addProduct(newBook)
   // console.log(
   //   `seeded ${users.length} users, ${categories.length} categories and ${

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, Product} = require('../db/models/')
+const {Order, Product, ProductOrder} = require('../db/models/')
 
 module.exports = router
 // const dummyBook = {
@@ -24,40 +24,156 @@ module.exports = router
 //   category: 'HTML'
 // }
 
+// router.get('/', async (req, res, next) => {
+//   try {
+//     // if (req.user) {
+//     //   console.log('req.user***', req.user.dataValues.id)
+//     //   const orders = await Order.findAll({
+//     //     where: {
+//     //       userId: req.user.dataValues.id,
+//     //       status: 'pending'
+//     //     },
+//     //     include: [{model: Product}]
+//     //   })
+//     if (req.user) {
+//       const order = await Order.findOrCreate({
+//         where: {
+//           userId: req.user.dataValues.id,
+//           status: 'pending'
+//         }
+//       })
+//       if (req.session.cart) {
+//         const cart = req.session.cart
+//         cart.forEach(async product => {
+//           try {
+//             await ProductOrder.create({
+//               unitPrice: product.price,
+//               quantity: product.quantity,
+//               productId: product.id,
+//               orderId: order.id
+//             })
+//           } catch (err) {
+//             next(err)
+//           }
+//         })
+//         const updatedOrder = await ProductOrder.findAll({
+//           where: {
+//             orderId: order.id
+//           }
+//         })
+//         res.json(updatedOrder)
+//       } else {
+//         res.json(orders[0].products)
+//       }
+//     } else {
+//       if (!req.session.cart) {
+//         req.session.cart = []
+//       }
+//       res.json(req.session.cart)
+//     }
+//   } catch (err) {
+//     next(err)
+//   }
+// })
+
 router.get('/', async (req, res, next) => {
   try {
-    if (req.user) {
-      console.log('req.user***', req.user.dataValues.id)
-      const orders = await Order.findAll({
+    let cart = []
+    if (!req.user) {
+      if (!req.session.cart) {
+        req.session.cart = []
+        cart = req.session.cart
+      }
+    } else {
+      const orderFromDb = await Order.findOrCreate({
         where: {
-          userId: req.user.dataValues.id,
+          userId: req.user.id,
           status: 'pending'
         },
         include: [{model: Product}]
       })
-      res.json(orders[0].products)
-    } else {
+      const orderInstance = orderFromDb[0]
       if (!req.session.cart) {
-        req.session.cart = []
+        cart = orderInstance.products
+      } else {
+        req.session.cart.forEach(async product => {
+          try {
+            await ProductOrder.create({
+              unitPrice: product.price,
+              quantity: product.quantity,
+              productId: product.id,
+              orderId: orderInstance.id
+            })
+          } catch (err) {
+            next(err)
+          }
+          const updatedCart = await Order.findById(orderInstance.id, {
+            include: [{model: Product}]
+          })
+          cart = updatedCart
+        })
       }
-      res.json(req.session.cart)
+      //if user exists, find or create order instance in db
     }
+    res.json(cart)
   } catch (err) {
     next(err)
   }
 })
 
 router.post('/', (req, res, next) => {
-  // if(req.user){
-  // } else{
-  //   if (req.session.cart) {
-  //     req.session.cart.push(req.body)
-  //   } else {
-  //     req.session.cart = [req.body]
-  //   }
-  //   res.json(req.session.cart)
-  // }
+  req.body.quantity = 1
+  if (req.session.cart) {
+    req.session.cart.push(req.body)
+  } else {
+    req.session.cart = [req.body]
+  }
+  console.log(req.session.cart)
+  res.json(req.session.cart)
 })
+
+// router.post('/', async (req, res, next) => {
+//   try {
+//     if (req.user) {
+//       const order = await Order.findOrCreate({
+//         where: {
+//           userId: req.user.dataValues.id
+//         }
+//       })
+
+//       if (req.session.cart) {
+//         const cart = req.session.cart
+//         cart.forEach(async product => {
+//           try {
+//             await ProductOrder.create({
+//               unitPrice: product.price,
+//               quantity: product.quantity,
+//               productId: product.id,
+//               orderId: order.id
+//             })
+//           } catch (err) {
+//             next(err)
+//           }
+//         })
+//         const updatedOrder = await ProductOrder.findAll({
+//           where: {
+//             orderId: order.id
+//           }
+//         })
+//         res.json(updatedOrder)
+//       }
+//     } else {
+//       if (req.session.cart) {
+//         req.session.cart.push(req.body)
+//       } else {
+//         req.session.cart = [req.body]
+//       }
+//       res.json(req.session.cart)
+//     }
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 router.put('/:id', (req, res, next) => {
   const id = +req.params.id
