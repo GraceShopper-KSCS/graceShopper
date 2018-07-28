@@ -15,7 +15,7 @@ const defaultHistory = {
 /**
  * ACTION CREATORS
  */
-export const getHistory = products => ({type: GET_HISTORY, products})
+export const getHistory = orders => ({type: GET_HISTORY, orders})
 
 /**
  * THUNK CREATORS
@@ -36,7 +36,7 @@ export const getHistoryThunk = () => async dispatch => {
 export default function(state = defaultHistory, action) {
   switch (action.type) {
     case GET_HISTORY: {
-      return {history: action.products}
+      return {history: action.orders}
     }
     default:
       return state

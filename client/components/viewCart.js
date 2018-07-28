@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import ProductCard from './productCard'
 import {connect} from 'react-redux'
 import {fetchCart, emptyCartThunk} from '../store/cart'
+import {getHistoryThunk} from '../store/history'
+import {Link} from 'react-router-dom'
 
 class ViewCart extends Component {
   constructor() {
@@ -20,6 +22,11 @@ class ViewCart extends Component {
             Empty Cart
           </button>
 
+          <Link to="/orders/history">
+            <button type="button" onClick={() => this.props.getHistoryThunk()}>
+              See Order History
+            </button>
+          </Link>
           {this.props.cart.map(book => {
             return <ProductCard key={book.id} product={book} />
           })}
@@ -38,7 +45,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchCart: () => dispatch(fetchCart()),
-    emptyCartThunk: () => dispatch(emptyCartThunk())
+    emptyCartThunk: () => dispatch(emptyCartThunk()),
+    getHistoryThunk: () => dispatch(getHistoryThunk())
   }
 }
 
