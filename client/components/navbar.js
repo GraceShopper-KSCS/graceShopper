@@ -14,9 +14,7 @@ const Navbar = ({handleClick, isLoggedIn, getSelectCat}) => (
       <Link to="/books" onClick={() => getSelectCat('')}>
         All books
       </Link>
-      <Link to="/cart" onClick={() => getCart()}>
-        View Cart{' '}
-      </Link>
+      <Link to="/cart">View Cart </Link>
       <SelectCategory />
       {isLoggedIn ? (
         <div>

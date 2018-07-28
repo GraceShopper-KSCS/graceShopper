@@ -11,8 +11,8 @@ const Order = props => {
       <h4>Order Status: {order.status}</h4>
 
       {products.map(product => (
-        <div>
-          <ProductCard key={product.id} product={product} />
+        <div key={product.id}>
+          <ProductCard product={product} />
           <h5>Quantity: {product.productorder.quantity}</h5>
         </div>
       ))}
