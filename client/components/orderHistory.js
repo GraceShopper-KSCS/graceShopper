@@ -10,7 +10,7 @@ class OrderHistory extends Component {
   render() {
     const OrderList = this.props.history
     console.log(OrderList)
-    if (!this.props.history) {
+    if (OrderList.length < 1) {
       return <h4>Your order history is empty</h4>
     }
     return (
