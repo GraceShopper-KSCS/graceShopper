@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchProductById, fetchReviews} from '../store/products'
-import Reviews from './reviews'
-
+import {fetchProductById} from '../store/products'
+import {fetchReviews} from '../store/review'
 import {addToCartThunk} from '../store/cart'
+import Reviews from './reviews'
 
 class SingleBook extends Component {
   componentDidMount() {
-    this.props.fetchProductById(this.props.match.params.id)
     this.props.fetchReviews(this.props.match.params.id)
+    this.props.fetchProductById(this.props.match.params.id)
   }
 
   render() {
@@ -20,7 +20,6 @@ class SingleBook extends Component {
       price
     } = this.props.selectedProduct
     const reviews = this.props.reviews
-
     return (
       <div>
         <h3>{title}</h3>
@@ -40,8 +39,9 @@ class SingleBook extends Component {
             <img src={imageUrl} />
           </div>
           <p>{description}</p>
+
           <div>
-            Reviews: <Reviews reviews={reviews} />
+            Reviews: <Reviews reviews={reviews} />{' '}
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@ class SingleBook extends Component {
 
 const mapStateToProps = state => ({
   selectedProduct: state.products.selectedProduct,
-  reviews: state.products.review
+  reviews: state.reviews.reviewForProduct
 })
 
 const mapDispatchToProps = function(dispatch) {

@@ -1,7 +1,6 @@
 //client/store/products
 
 import axios from 'axios'
-import {runInNewContext} from 'vm'
 
 /**
  * ACTION TYPES
@@ -12,8 +11,6 @@ const WRITE_CATEGORY = 'WRITE_CATEGORY'
 const GET_SELECTCAT = 'GET_SELECTCAT'
 const GET_FILTERED = 'GET_FILTERED'
 const ADD_PRODUCT = 'ADD_PRODUCT'
-const GET_CART = 'GET_CART'
-const GET_REVIEWS = 'GET_REVIEWS'
 const GET_CATEGORIES = 'GET_CATEGORIES'
 const SET_FILTERED = 'SET_FILTERED'
 
@@ -27,8 +24,6 @@ const defaultProducts = {
   category: '',
   selectCategory: '',
   filtered: [],
-  cart: [],
-  review: []
   categories: []
 }
 
@@ -37,7 +32,7 @@ const defaultProducts = {
  */
 
 export const getSelectCat = val => ({type: GET_SELECTCAT, val})
-export const getProducts = products => ({type: GET_PRODUCTS, products})
+const getProducts = products => ({type: GET_PRODUCTS, products})
 export const writeCategory = val => ({type: WRITE_CATEGORY, val})
 export const addProduct = product => ({
   type: ADD_PRODUCT,
@@ -54,14 +49,6 @@ const getfiltered = filtered => ({
   filtered
 })
 
-export const getCart = cart => ({
-  type: GET_CART,
-  cart
-})
-export const getReviews = reviews => ({
-  type: GET_REVIEWS,
-  reviews
-})
 const getCategories = categories => ({
   type: GET_CATEGORIES,
   categories
@@ -124,25 +111,12 @@ export const setFilteredThunk = () => dispatch => {
   }
 }
 
-export const fetchCart = () => async dispatch => {
-  try {
-    const res = await axios.get('/api/cart')
-    dispatch(getCart(res.data))
 export const fetchCategories = () => async dispatch => {
   try {
     const res = await axios.get('/api/books/categories')
     dispatch(getCategories(res.data))
   } catch (err) {
     console.error(err)
-  }
-}
-
-export const fetchReviews = id => async dispatch => {
-  try {
-    const res = await axios.get(`/api/reviews/${id}`)
-    dispatch(getReviews(res.data))
-  } catch (err) {
-    console.error('Fetching reviews unsuccessful', err)
   }
 }
 /**
@@ -156,17 +130,14 @@ export default function(state = defaultProducts, action) {
     case GET_SINGLE_PRODUCT: {
       return {...state, selectedProduct: action.product}
     }
+
     case WRITE_CATEGORY:
       return {...state, category: action.val}
     case GET_SELECTCAT:
       return {...state, selectCategory: action.val}
+
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
-    case GET_CART:
-      return {...state, cart: action.cart}
-    case GET_REVIEWS: {
-      return {...state, review: action.reviews}
-    }
     case GET_FILTERED:
       return {...state, filtered: action.filtered}
     case GET_CATEGORIES:
@@ -183,20 +154,3 @@ export default function(state = defaultProducts, action) {
       return state
   }
 }
-
-// /**
-//  * REDUCER
-//  */
-// export default function (state = defaultProducts, action) {
-//   switch (action.type) {
-//     case GET_PRODUCTS:
-//       return { ...state, products: action.products }
-//     case WRITE_CATEGORY:
-//       return { ...state, category: action.val }
-//     case GET_SELECTCAT:
-//       return { ...state, selectCategory: action.val }
-//     default:
-//       return state;
-
-//   }
-// }

@@ -15,29 +15,33 @@ class Reviews extends Component {
     return stars
   }
   render() {
-    return (
-      <div>
-        {this.props.reviews &&
-          this.props.reviews.map(review => (
-            <div key={review.id}>
-              <h5>
-                {/* <Rater rating={review.rating} total={5} /> */}
+    if (this.props.reviews != 'undefined') {
+      return (
+        <div>
+          {this.props.reviews &&
+            this.props.reviews.map(review1 => (
+              <div key={review1.id}>
+                <h5>
+                  {/* <Rater rating={review.rating} total={5} /> */}
 
-                <span>
-                  Rating: <Rating initialRating={review.rating} readonly />
-                </span>
-              </h5>
-              <h5>
-                <span>Title: {review.title}</span>
-              </h5>
-              <h6>By:{review.user.email}</h6>
-              <h5>
-                <span>Comment: {review.content}</span>
-              </h5>
-            </div>
-          ))}
-      </div>
-    )
+                  <span>
+                    Rating: <Rating initialRating={review1.rating} readonly />
+                  </span>
+                </h5>
+                <h5>
+                  <span>Title: {review1.title}</span>
+                </h5>
+                <h6>By:{review1.user.email}</h6>
+                <h5>
+                  <span>Comment: {review1.content}</span>
+                </h5>
+              </div>
+            ))}
+        </div>
+      )
+    } else {
+      return <div> Reviews Still Renedering ....</div>
+    }
   }
 }
 

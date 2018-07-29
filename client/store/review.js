@@ -9,7 +9,6 @@ const DELETE_REVIEWS = 'DELETE_REVIEWS'
  * INITIAL STATE
  */
 const initialState = {
-  review: [],
   selectedProduct: {}
 }
 
@@ -32,8 +31,10 @@ export const deleteReview = reviews => ({
  * THUNK CREATORS
  */
 export const fetchReviews = id => async dispatch => {
+  console.log('Inside fetchReviews')
   try {
     const res = await axios.get(`/api/reviews/${id}`)
+    console.log('res.data', res.data)
     dispatch(getReviews(res.data))
   } catch (err) {
     console.error('Fetching reviews unsuccessful', err)
@@ -63,7 +64,7 @@ export const removeReview = id => async dispatch => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_REVIEWS: {
-      return {...state, review: action.reviews}
+      return {...state, reviewForProduct: action.reviews}
     }
     case CREATE_REVIEWS: {
       return {...state, review: action.reviews}
