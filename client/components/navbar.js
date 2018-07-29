@@ -14,10 +14,11 @@ const Navbar = ({handleClick, isLoggedIn, getSelectCat, fetchCart}) => (
       <Link to="/books" onClick={() => getSelectCat('')}>
         All books
       </Link>
+
       <Link to="/cart" onClick={() => fetchCart()}>
         View Cart{' '}
       </Link>
-      <SelectCategory />
+
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
