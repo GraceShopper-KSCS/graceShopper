@@ -5,16 +5,16 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import SelectCategory from './selectCatagory'
 import {getSelectCat} from '../store/products'
-import {getCart} from '../store/products'
+import {fetchCart} from '../store/cart'
 
-const Navbar = ({handleClick, isLoggedIn, getSelectCat}) => (
+const Navbar = ({handleClick, isLoggedIn, getSelectCat, fetchCart}) => (
   <div>
     <h1>Codebrary</h1>
     <nav>
       <Link to="/books" onClick={() => getSelectCat('')}>
         All books
       </Link>
-      <Link to="/cart" onClick={() => getCart()}>
+      <Link to="/cart" onClick={() => fetchCart()}>
         View Cart{' '}
       </Link>
       <SelectCategory />
@@ -52,7 +52,8 @@ const mapDispatch = dispatch => {
     handleClick() {
       dispatch(logout())
     },
-    getSelectCat: val => dispatch(getSelectCat(val))
+    getSelectCat: val => dispatch(getSelectCat(val)),
+    fetchCart: () => dispatch(fetchCart())
   }
 }
 

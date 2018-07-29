@@ -68,7 +68,7 @@ async function seed() {
       author: 'Jon Duckett',
       description:
         'Every day, more and more people want to learn some HTML and CSS. Joining the professional web designers and programmers are new audiences who need to know a little bit of code at work (update a content management system or e–commerce store) and those who want to make their personal blogs more attractive. Many books teaching HTML and CSS are dry and only written for those who want to become programmers, which is why this book takes an entirely new approach.',
-      price: 21.58,
+      price: 2158,
       imageUrl:
         'https://dzvfs5sz5rprz.cloudfront.net/media/catalog/product/cache/1/image/1200x/040ec09b1e35df139433887a97daa66f/h/t/html_and_css_design_and_build_websites_book_1st_edition-1.jpg',
 
@@ -87,7 +87,7 @@ async function seed() {
       Learn the essential programming building blocks, including operators, types, variables, conditionals, loops, and functions
       Become familiar with JavaScript's core mechanisms such as values, function closures, this, and prototypes
       Get an overview of other books in the series—and learn why it’s important to understand all parts of JavaScript`,
-      price: 2.99,
+      price: 299,
       imageUrl:
         'https://images-na.ssl-images-amazon.com/images/I/41L18FvA5rL._SX331_BO1,204,203,200_.jpg',
       inventory: 35,
@@ -101,7 +101,7 @@ async function seed() {
     Using everyday objects and familiar language systems such as Braille and Morse code, author Charles Petzold weaves an illuminating narrative for anyone who’s ever wondered about the secret inner life of computers and other smart machines.
 
     It’s a cleverly illustrated and eminently comprehensible story—and along the way, you’ll discover you’ve gained a real context for understanding today’s world of PCs, digital media, and the Internet. No matter what your level of technical savvy, CODE will charm you—and perhaps even awaken the technophile within."`,
-      price: 20.05,
+      price: 2005,
       imageUrl:
         'https://images-na.ssl-images-amazon.com/images/I/310WZuKyEUL._SX334_BO1,204,203,200_.jpg',
       inventory: 23,
@@ -111,7 +111,7 @@ async function seed() {
       title: 'The Pragmatic Programmer: From Journeyman to Master',
       author: 'Andrew Hunt and David Thomas',
       description: `Lessons on how to improve productivity, accuracy, and job satisfaction. Designed for an audience from the new coder to the experienced programmer or manager. Develop the attitude that helps you become the best at what you do. The purpose of this book is to bring you from the coder without a foundation or discipline for programming into someone who has a strong understanding of variables, objects, algorithms, and data structures. It is a smooth transition from this book into any coding language, and for this reason we recommend this book as not a language book but a primer in every programming language.`,
-      price: 16.76,
+      price: 1676,
       imageUrl:
         'https://coderseye.com/wp-content/uploads/the-pragmatic-programmer-andrew-hunt.jpg?x59762',
       inventory: 18,
@@ -132,7 +132,7 @@ async function seed() {
 
   const order1 = await Order.create({
     status: 'pending',
-    userId: 3
+    userId: cody.id
   })
   const order1Line = await ProductOrder.create({
     orderId: order1.id,
@@ -141,6 +141,22 @@ async function seed() {
     unitPrice: 1495
   })
 
+  //const newBook2 = {...newBook, unitPrice: newBook.price, quantity: 3}
+
+  // await order1.addProduct(newBook, {unitPrice: 3303, quantity: '4'})
+  // const newLine4 = await order1.addProduct(newBook, {unitPrice: 3303, quantity: '3'})
+  // let newInstance = newLine4[0]
+  // console.log('********', newInstance[0].dataValues)
+  //  const newInstance = await ProductOrder.findById(newLine4.id)
+  //newInstance = await newInstance.update({unitPrice: 3303, quantity: '4'})
+  // await ProductOrder.update(
+  //   {unitPrice: 3303, quantity: '4'},
+  //   {
+  //     where: {
+  //       id: newLine4.id
+  //     }
+  //   }
+  // )
   const order1Line2 = await ProductOrder.create({
     orderId: order1.id,
     quantity: '1',
@@ -148,7 +164,6 @@ async function seed() {
     unitPrice: 2158
   })
 
-  // order1.addProduct(newBook)
   // console.log(
   //   `seeded ${users.length} users, ${categories.length} categories and ${
   //     products.length
