@@ -38,7 +38,8 @@ router.get('/:productId', async (req, res, next) => {
     const reviews = await Review.findAll({
       where: {
         productId: id
-      }
+      },
+      include: [{all: true, nested: true}]
     })
     // const reviews = await [dummyReview]
     res.json(reviews)

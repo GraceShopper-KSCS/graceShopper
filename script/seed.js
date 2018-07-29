@@ -191,6 +191,8 @@ async function runSeed() {
 
     const reviews = await Review.findAll()
     const products = await Product.findAll()
+    const users = await User.findAll()
+
     const review1 = reviews[0].setProduct(products[0])
     const review2 = reviews[1].setProduct(products[1])
     const review3 = reviews[2].setProduct(products[2])
@@ -199,7 +201,8 @@ async function runSeed() {
     const review6 = reviews[5].setProduct(products[2])
     const review7 = reviews[6].setProduct(products[1])
     const review8 = reviews[7].setProduct(products[0])
-
+    const reviewUser1 = reviews[0].setUser(users[0])
+    const reviewUser2 = reviews[1].setUser(users[1])
     await Promise.all([
       review1,
       review2,
@@ -208,7 +211,9 @@ async function runSeed() {
       review5,
       review6,
       review7,
-      review8
+      review8,
+      reviewUser1,
+      reviewUser2
     ])
   } catch (err) {
     console.error(err)

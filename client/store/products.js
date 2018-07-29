@@ -14,8 +14,6 @@ const GET_FILTERED = 'GET_FILTERED'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const GET_CART = 'GET_CART'
 const GET_REVIEWS = 'GET_REVIEWS'
-const CREATE_REVIEWS = 'CREATE_REVIEWS'
-const DELETE_REVIEWS = 'DELETE_REVIEWS'
 
 /**
  * INITIAL STATE
@@ -36,7 +34,7 @@ const defaultProducts = {
  */
 
 export const getSelectCat = val => ({type: GET_SELECTCAT, val})
-const getProducts = products => ({type: GET_PRODUCTS, products})
+export const getProducts = products => ({type: GET_PRODUCTS, products})
 export const writeCategory = val => ({type: WRITE_CATEGORY, val})
 export const addProduct = product => ({
   type: ADD_PRODUCT,
@@ -59,14 +57,6 @@ export const getCart = cart => ({
 })
 export const getReviews = reviews => ({
   type: GET_REVIEWS,
-  reviews
-})
-export const createReview = reviews => ({
-  type: CREATE_REVIEWS,
-  reviews
-})
-export const deleteReview = reviews => ({
-  type: DELETE_REVIEWS,
   reviews
 })
 /**
@@ -124,25 +114,6 @@ export const fetchReviews = id => async dispatch => {
     console.error('Fetching reviews unsuccessful', err)
   }
 }
-
-export const addReview = reviews => async dispatch => {
-  try {
-    const res = await axios.post('/api/reviews', reviews)
-    dispatch(createReview(res.data))
-  } catch (err) {
-    console.error(`Creating reviews: ${reviews} unsuccessful`, err)
-  }
-}
-
-export const removeReview = id => async dispatch => {
-  try {
-    const res = await axios.delete(`/api/reviews/${id}`)
-    dispatch(deleteReview(res.data))
-  } catch (err) {
-    console.error(`Removing review: ${id} unsuccessful`, err)
-  }
-}
-
 /**
  * REDUCER
  */
@@ -164,12 +135,6 @@ export default function(state = defaultProducts, action) {
       return {...state, cart: action.cart}
     case GET_REVIEWS: {
       return {...state, review: action.reviews}
-    }
-    case CREATE_REVIEWS: {
-      return {...state, review: action.reviews}
-    }
-    case DELETE_REVIEWS: {
-      return {...state.filter(review => review.id !== action.review.id)}
     }
     default:
       return state

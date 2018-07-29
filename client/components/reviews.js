@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Rating from 'react-rating'
+
 class Reviews extends Component {
   constructor() {
     super()
@@ -14,7 +15,6 @@ class Reviews extends Component {
     return stars
   }
   render() {
-    console.log('stars', this.makeStars(1))
     return (
       <div>
         {this.props.reviews &&
@@ -30,6 +30,7 @@ class Reviews extends Component {
               <h5>
                 <span>Title: {review.title}</span>
               </h5>
+              <h6>By:{review.user.email}</h6>
               <h5>
                 <span>Comment: {review.content}</span>
               </h5>

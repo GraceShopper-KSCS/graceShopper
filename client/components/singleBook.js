@@ -20,7 +20,7 @@ class SingleBook extends Component {
       price
     } = this.props.selectedProduct
     const reviews = this.props.reviews
-    console.log('Reviews', reviews)
+
     return (
       <div>
         <h3>{title}</h3>
