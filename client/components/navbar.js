@@ -4,17 +4,15 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import SelectCategory from './selectCatagory'
-<<<<<<< HEAD
+
 import {
   getSelectCat,
   fetchCategories,
   fetchFiltered,
   setFilteredThunk
 } from '../store/products'
-=======
-import {getSelectCat} from '../store/products'
+
 import {getCart} from '../store/products'
->>>>>>> master
 
 const Navbar = ({
   handleClick,
@@ -27,7 +25,6 @@ const Navbar = ({
   <div>
     <h1>Codebrary</h1>
     <nav>
-<<<<<<< HEAD
       <Link
         to="/books"
         onClick={() => {
@@ -38,15 +35,9 @@ const Navbar = ({
         All books
       </Link>
 
-=======
-      <Link to="/books" onClick={() => getSelectCat('')}>
-        All books
-      </Link>
       <Link to="/cart" onClick={() => getCart()}>
         View Cart{' '}
       </Link>
-      <SelectCategory />
->>>>>>> master
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}

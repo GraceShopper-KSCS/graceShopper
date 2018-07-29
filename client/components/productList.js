@@ -20,31 +20,21 @@ class ProductList extends Component {
     this.props.loadProducts()
   }
 
-<<<<<<< HEAD
   async handleSubmit(evt) {
-    evt.preventDefault()
-    console.log('CATA__', this.props.category)
-    const category = this.props.getSelectCat(this.props.category)
-    const filtered = await this.props.fetchFiltered(category.val)
-    console.log('***FILTERED***', filtered)
-    await this.props.writeCategory('')
-    // this.props.history.push('
+    try {
+      evt.preventDefault()
+      console.log('CATA__', this.props.category)
+      const category = this.props.getSelectCat(this.props.category)
+      const filtered = await this.props.fetchFiltered(category.val)
+      console.log('***FILTERED***', filtered)
+      await this.props.writeCategory('')
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   //handleChange
   //handleSubmit
-=======
-  render() {
-    let filteredCategory = []
-    if (this.props.selectCategory !== '') {
-      filteredCategory = this.props.products.filter(product => {
-        return (
-          product.category.toUpperCase() ===
-          this.props.selectCategory.toUpperCase()
-        )
-      })
-    }
->>>>>>> master
 
   render() {
     if (this.props.products && this.props.products.length) {
