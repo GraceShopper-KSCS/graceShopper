@@ -34,10 +34,10 @@ const Navbar = ({
       >
         All books
       </Link>
-
       <Link to="/cart" onClick={() => getCart()}>
         View Cart{' '}
       </Link>
+
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
