@@ -1,7 +1,6 @@
 //client/store/products
 
 import axios from 'axios'
-import {runInNewContext} from 'vm'
 
 /**
  * ACTION TYPES
@@ -98,7 +97,7 @@ export const fetchFiltered = categoryName => async dispatch => {
   }
 }
 
-export const setFiltered = () => async dispatch => {
+export const setFilteredThunk = () => dispatch => {
   try {
     dispatch(setFiltered())
   } catch (err) {

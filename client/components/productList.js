@@ -1,6 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadProducts, getSelectCat, fetchFiltered} from '../store/products'
+import {
+  loadProducts,
+  getSelectCat,
+  fetchFiltered,
+  setFilteredThunk,
+  writeCategory
+} from '../store/products'
 import ProductCard from './productCard'
 import SelectCategory from './selectCatagory'
 
@@ -16,9 +22,11 @@ class ProductList extends Component {
 
   async handleSubmit(evt) {
     evt.preventDefault()
+    console.log('CATA__', this.props.category)
     const category = this.props.getSelectCat(this.props.category)
     const filtered = await this.props.fetchFiltered(category.val)
-    console.log(filtered)
+    console.log('***FILTERED***', filtered)
+    await this.props.writeCategory('')
     // this.props.history.push('
   }
 
@@ -67,6 +75,7 @@ const mapDispatchToProps = function(dispatch) {
     loadProducts: () => dispatch(loadProducts()),
     getSelectCat: val => dispatch(getSelectCat(val)),
     fetchFiltered: category => dispatch(fetchFiltered(category)),
+    setFilteredThunk: () => dispatch(setFilteredThunk()),
     writeCategory: val => dispatch(writeCategory(val))
   }
 }

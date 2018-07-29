@@ -20,16 +20,6 @@ router.get('/categories', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
-  try {
-    const id = req.params.id
-    const book = await Product.findById(id)
-    res.json(book)
-  } catch (err) {
-    next(err)
-  }
-})
-
 router.get('/filter/:category', async (req, res, next) => {
   try {
     const category = req.params.category
@@ -40,6 +30,16 @@ router.get('/filter/:category', async (req, res, next) => {
       include: [{model: Product}]
     })
     res.json(cat)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const id = req.params.id
+    const book = await Product.findById(id)
+    res.json(book)
   } catch (err) {
     next(err)
   }

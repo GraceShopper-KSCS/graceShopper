@@ -4,9 +4,21 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import SelectCategory from './selectCatagory'
-import {getSelectCat, fetchCategories, fetchFiltered} from '../store/products'
+import {
+  getSelectCat,
+  fetchCategories,
+  fetchFiltered,
+  setFilteredThunk
+} from '../store/products'
 
-const Navbar = ({handleClick, isLoggedIn, getSelectCat, fetchFiltered}) => (
+const Navbar = ({
+  handleClick,
+  isLoggedIn,
+  getSelectCat,
+  fetchFiltered,
+  setFilteredThunk,
+  filtered
+}) => (
   <div>
     <h1>Codebrary</h1>
     <nav>
@@ -14,12 +26,12 @@ const Navbar = ({handleClick, isLoggedIn, getSelectCat, fetchFiltered}) => (
         to="/books"
         onClick={() => {
           getSelectCat('')
-          fetchFiltered('')
+          setFilteredThunk()
         }}
       >
         All books
       </Link>
-      <SelectCategory />
+
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
@@ -45,7 +57,8 @@ const Navbar = ({handleClick, isLoggedIn, getSelectCat, fetchFiltered}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    filtered: state.products.filtered
   }
 }
 
@@ -55,7 +68,8 @@ const mapDispatch = dispatch => {
       dispatch(logout())
     },
     getSelectCat: val => dispatch(getSelectCat(val)),
-    fetchFiltered: category => dispatch(fetchFiltered(category))
+    fetchFiltered: category => dispatch(fetchFiltered(category)),
+    setFilteredThunk: () => dispatch(setFilteredThunk())
   }
 }
 

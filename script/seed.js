@@ -26,14 +26,14 @@ async function seed() {
     User.create({email: 'admin@email.com', password: 'admin', admin: true})
   ])
 
-  const html = await Category.create({name: 'html'})
-  const css = await Category.create({name: 'css'})
-  const cPlusPlus = await Category.create({name: 'c++'})
-  const javascript = await Category.create({name: 'javascript'})
-  const general = await Category.create({name: 'general'})
-  const beginner = await Category.create({name: 'beginner'})
-  const intermediate = await Category.create({name: 'intermediate'})
-  const advanced = await Category.create({name: 'advanced'})
+  const html = await Category.create({name: 'HTML'})
+  const css = await Category.create({name: 'CSS'})
+  const cPlusPlus = await Category.create({name: 'C++'})
+  const javascript = await Category.create({name: 'Javascript'})
+  const general = await Category.create({name: 'General'})
+  const beginner = await Category.create({name: 'Beginner'})
+  const intermediate = await Category.create({name: 'Intermediate'})
+  const advanced = await Category.create({name: 'Advanced'})
 
   const book1 = await Product.create({
     title: 'HTML and CSS: Design and Build Websites',

@@ -5,10 +5,10 @@ import {
   getSelectCat,
   loadProducts,
   fetchFiltered,
-  fetchCategories
+  fetchCategories,
+  setFilteredThunk
 } from '../store/products'
 import {withRouter} from 'react-router-dom'
-import {runInNewContext} from 'vm'
 
 class SelectCategory extends Component {
   constructor() {
@@ -20,7 +20,7 @@ class SelectCategory extends Component {
     try {
       await this.props.loadProducts()
       const cats = await this.props.fetchCategories()
-      console.log(cats)
+      console.log('****cats', this.props.categories)
     } catch (err) {
       console.error(err)
     }
@@ -28,6 +28,7 @@ class SelectCategory extends Component {
 
   handleChange(event) {
     this.props.writeCategory(event.target.value)
+    console.log('CAT_NAME*', event.target.value)
   }
 
   render() {
@@ -39,17 +40,18 @@ class SelectCategory extends Component {
           <label>Choose category</label>
           <select name="category" onChange={this.handleChange} value={category}>
             <option value="">Choose Category</option>
-            {/* {this.props.categories
+            {console.log('CATS______', this.props.categories)}
+            {this.props.categories && this.props.categories.length
               ? this.props.categories.map(cat => {
                   return (
                     <option key={cat.id} value={cat.name}>
-                      {cat.name.toUpperCase()}
+                      {cat.name}
                     </option>
                   )
                 })
-              : null} */}
-            <option value="html">HTML</option>
-            <option value="javascript">Javascript</option>
+              : null}
+            {/* <option value="html">HTML</option>
+            <option value="javascript">Javascript</option> */}
           </select>
           <button type="submit">Choose Category</button>
         </form>
@@ -59,7 +61,8 @@ class SelectCategory extends Component {
 }
 
 const mapStateToProps = state => ({
-  category: state.products.category
+  category: state.products.category,
+  categories: state.products.categories
 })
 const mapDispatchToProps = function(dispatch) {
   return {
@@ -67,7 +70,8 @@ const mapDispatchToProps = function(dispatch) {
     getSelectCat: val => dispatch(getSelectCat(val)),
     loadProducts: () => dispatch(loadProducts()),
     fetchFiltered: category => dispatch(fetchFiltered(category)),
-    fetchCategories: () => dispatch(fetchCategories())
+    fetchCategories: () => dispatch(fetchCategories()),
+    setFilteredThunk: () => dispatch(setFilteredThunk())
   }
 }
 const ConnectSelectCategory = withRouter(
