@@ -14,6 +14,8 @@ const GET_FILTERED = 'GET_FILTERED'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const GET_CART = 'GET_CART'
 const GET_REVIEWS = 'GET_REVIEWS'
+const GET_CATEGORIES = 'GET_CATEGORIES'
+const SET_FILTERED = 'SET_FILTERED'
 
 /**
  * INITIAL STATE
@@ -27,6 +29,7 @@ const defaultProducts = {
   filtered: [],
   cart: [],
   review: []
+  categories: []
 }
 
 /**
@@ -46,7 +49,7 @@ export const getSingleProduct = product => ({
   product
 })
 
-export const getFiltered = filtered => ({
+const getfiltered = filtered => ({
   type: GET_FILTERED,
   filtered
 })
@@ -59,6 +62,16 @@ export const getReviews = reviews => ({
   type: GET_REVIEWS,
   reviews
 })
+const getCategories = categories => ({
+  type: GET_CATEGORIES,
+  categories
+})
+
+const setFiltered = () => ({
+  type: SET_FILTERED,
+  filtered: []
+})
+
 /**
  * THUNK CREATORS
  */
@@ -88,10 +101,24 @@ export const fetchProductById = id => async dispatch => {
   }
 }
 
-export const fetchFilteredProducts = category => async dispatch => {
+export const fetchFiltered = categoryName => async dispatch => {
   try {
-    const res = await axios.get(`/api/books/${category}`)
-    dispatch(getFiltered(res.data))
+    const res = await axios.get(`api/books/filter/${categoryName}`)
+    console.log('filtered data**233', res.data[0].products)
+    dispatch(getfiltered(res.data[0].products))
+
+    // export const fetchFilteredProducts = category => async dispatch => {
+    //   try {
+    //     const res = await axios.get(`/api/books/${category}`)
+    //     dispatch(getFiltered(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const setFilteredThunk = () => dispatch => {
+  try {
+    dispatch(setFiltered())
   } catch (err) {
     console.error(err)
   }
@@ -101,6 +128,10 @@ export const fetchCart = () => async dispatch => {
   try {
     const res = await axios.get('/api/cart')
     dispatch(getCart(res.data))
+export const fetchCategories = () => async dispatch => {
+  try {
+    const res = await axios.get('/api/books/categories')
+    dispatch(getCategories(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -136,6 +167,18 @@ export default function(state = defaultProducts, action) {
     case GET_REVIEWS: {
       return {...state, review: action.reviews}
     }
+    case GET_FILTERED:
+      return {...state, filtered: action.filtered}
+    case GET_CATEGORIES:
+      return {
+        ...state,
+        categories: action.categories
+      }
+    case SET_FILTERED:
+      return {
+        ...state,
+        filtered: []
+      }
     default:
       return state
   }
