@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProductById} from '../store/products'
+import {addToCartThunk} from '../store/cart'
 
 class SingleBook extends Component {
   componentDidMount() {
@@ -22,6 +23,15 @@ class SingleBook extends Component {
         <h5>By: {author}</h5>
         <h5>Price: {price}</h5>
         <div>
+          <button
+            type="button"
+            onClick={() =>
+              this.props.addToCartThunk(this.props.selectedProduct)
+            }
+          >
+            Add To Cart
+          </button>
+
           <div className="bigPicture">
             <img src={imageUrl} />
           </div>
@@ -39,7 +49,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = function(dispatch) {
   return {
-    fetchProductById: id => dispatch(fetchProductById(id))
+    fetchProductById: id => dispatch(fetchProductById(id)),
+    addToCartThunk: product => dispatch(addToCartThunk(product))
   }
 }
 

@@ -9,6 +9,7 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 const GET_SINGLE_PRODUCT = 'GET_SINGLE_PRODUCT'
 const WRITE_CATEGORY = 'WRITE_CATEGORY'
 const GET_SELECTCAT = 'GET_SELECTCAT'
+const GET_FILTERED = 'GET_FILTERED'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const GET_FILTERED = 'GET_FILTERED'
 const GET_CATEGORIES = 'GET_CATEGORIES'
@@ -17,6 +18,7 @@ const SET_FILTERED = 'SET_FILTERED'
 /**
  * INITIAL STATE
  */
+
 const defaultProducts = {
   products: [],
   selectedProduct: {},
@@ -38,7 +40,7 @@ export const addProduct = product => ({
   product
 })
 
-const getSingleProduct = product => ({
+export const getSingleProduct = product => ({
   type: GET_SINGLE_PRODUCT,
   product
 })
@@ -92,6 +94,11 @@ export const fetchFiltered = categoryName => async dispatch => {
     const res = await axios.get(`api/books/filter/${categoryName}`)
     console.log('filtered data**233', res.data[0].products)
     dispatch(getfiltered(res.data[0].products))
+
+    // export const fetchFilteredProducts = category => async dispatch => {
+    //   try {
+    //     const res = await axios.get(`/api/books/${category}`)
+    //     dispatch(getFiltered(res.data))
   } catch (err) {
     console.error(err)
   }
@@ -148,20 +155,3 @@ export default function(state = defaultProducts, action) {
       return state
   }
 }
-
-// /**
-//  * REDUCER
-//  */
-// export default function (state = defaultProducts, action) {
-//   switch (action.type) {
-//     case GET_PRODUCTS:
-//       return { ...state, products: action.products }
-//     case WRITE_CATEGORY:
-//       return { ...state, category: action.val }
-//     case GET_SELECTCAT:
-//       return { ...state, selectCategory: action.val }
-//     default:
-//       return state;
-
-//   }
-// }

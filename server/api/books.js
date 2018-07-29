@@ -1,5 +1,7 @@
 const router = require('express').Router()
+
 const {Product, Category, Tags} = require('../db/models')
+
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -44,6 +46,21 @@ router.get('/:id', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/category/:name', async (req, res, next) => {
+  try {
+    const category = await Category.findOne({
+      where: {
+        name: req.params.name
+      }
+    })
+    const books = await category.getProducts()
+    res.json(books)
+  } catch (err) {
+    next(err)
+  }
+})
+
 //Routes only accessible to Admin Users
 
 router.post('/', async (req, res, next) => {

@@ -20,6 +20,7 @@ class ProductList extends Component {
     this.props.loadProducts()
   }
 
+<<<<<<< HEAD
   async handleSubmit(evt) {
     evt.preventDefault()
     console.log('CATA__', this.props.category)
@@ -32,6 +33,18 @@ class ProductList extends Component {
 
   //handleChange
   //handleSubmit
+=======
+  render() {
+    let filteredCategory = []
+    if (this.props.selectCategory !== '') {
+      filteredCategory = this.props.products.filter(product => {
+        return (
+          product.category.toUpperCase() ===
+          this.props.selectCategory.toUpperCase()
+        )
+      })
+    }
+>>>>>>> master
 
   render() {
     if (this.props.products && this.props.products.length) {

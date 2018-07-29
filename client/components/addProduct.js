@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import ProductForm from './productForm'
-import {setProduct} from '../store/products'
-import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
+import { setProduct } from '../store/products'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 class AddProduct extends Component {
   constructor() {
@@ -22,8 +22,7 @@ class AddProduct extends Component {
   }
 
   handleChange(evt) {
-    this.setState({[evt.target.name]: evt.target.value})
-    console.log('STATE', this.state)
+    this.setState({ [evt.target.name]: evt.target.value })
   }
 
   async handleSubmit(evt) {
@@ -42,7 +41,7 @@ class AddProduct extends Component {
       } else {
         await this.props.setProduct(this.state)
       }
-      this.setState({hasSubmitted: true})
+      this.setState({ hasSubmitted: true })
     } catch (err) {
       console.error(err)
     }
@@ -52,12 +51,12 @@ class AddProduct extends Component {
     return this.state.hasSubmitted ? (
       <Redirect to="/books" />
     ) : (
-      <ProductForm
-        state={this.state}
-        handleChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
-      />
-    )
+        <ProductForm
+          state={this.state}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+      )
   }
 }
 
