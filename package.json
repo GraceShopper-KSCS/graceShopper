@@ -13,7 +13,6 @@
     "lint": "eslint ./ --ignore-path .gitignore",
     "lint-fix": "npm run lint -- --fix",
     "precommit": "# lint-staged # un-comment to enable",
-
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
     "postinstall": "touch secrets.js & npm run build-client",
     "seed": "node script/seed.js",
@@ -51,8 +50,12 @@
     "react": "^16.3.1",
     "react-dom": "^16.0.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "react-rating": "^1.3.0",
 =======
+>>>>>>> master
+=======
+    "react-rating": "^1.3.0",
 >>>>>>> master
     "react-redux": "^5.0.2",
     "react-router-dom": "^4.1.1",

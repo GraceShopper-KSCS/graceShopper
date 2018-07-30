@@ -70,11 +70,23 @@ router.delete('/:reviewId', async (req, res, next) => {
 })
 
 // add a new review
+<<<<<<< HEAD
 router.post('/', async (req, res, next) => {
   try {
     const newReview = await Review.create(req.body)
     newReview.setProduct(req.params.productId)
     res.status(201).json(newReview)
+=======
+router.post('/:productId', async (req, res, next) => {
+  try {
+    if (req.product) {
+      const newReview = await Review.create(req.body)
+      newReview.setProduct(req.params.productId)
+      res.status(201).json(newReview)
+    } else {
+      res.status(404).send('You are not authorized')
+    }
+>>>>>>> master
   } catch (err) {
     next(err)
   }

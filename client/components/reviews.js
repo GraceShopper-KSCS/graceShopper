@@ -45,6 +45,7 @@ class Reviews extends Component {
                 <h6>
                   {/* By:{review1.user != 'undefined' ? review1.user.email : ''} */}
                 </h6>
+                <h6>By:{review1.user.email}</h6>
                 <h5>
                   <span>Comment: {review1.content}</span>
                 </h5>
@@ -60,3 +61,4 @@ class Reviews extends Component {
 
 // export default connect(null, null)(Reviews)
 export default withRouter(connect(null, null)(Reviews))
+
