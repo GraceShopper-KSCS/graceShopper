@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, Product, ProductOrder} = require('../db/models/')
+const { Order, Product, ProductOrder } = require('../db/models/')
 
 ///need to add a beforeCreate hook? that checks if there is already a
 
@@ -38,39 +38,15 @@ router.get('/', async (req, res, next) => {
       res.json(cart)
     } else {
       //if logged in, create a new order instance in db for user
-      const newOrderInstance = await Order.create({
-        userId: req.user.dataValues.id,
-        status: 'pending'
+      const newOrderInstance = await Order.findOne({
+        where: {
+          userId: req.user.dataValues.id,
+          status: 'pending'
+        },
+        include: [{ all: true }]
       })
-      if (req.session.cart && req.session.cart.length) {
-        //if there are items in session cart, create productOrder instance in db for each item in session.cart array (i.e. add all items from session.cart to db)
-        req.session.cart.forEach(async product => {
-          try {
-            await ProductOrder.create({
-              unitPrice: +product.price * 100,
-              quantity: product.quantity,
-              productId: product.id,
-              orderId: newOrderInstance.id
-            })
-          } catch (err) {
-            next(err)
-          }
-        })
-      }
-      //find all orders for logged in user with status 'pending'
-      const updatedCart = await Order.findAll({
-        where: {userId: req.user.dataValues.id, status: 'pending'},
-        include: [{model: Product}]
-      })
-      let newProductsArr = []
-      //combine all items from multiple orders into one array for new cart
-      updatedCart.map(item => {
-        return item.products.forEach(product => {
-          newProductsArr.push(product)
-        })
-      })
-      cart = newProductsArr
-      res.json(cart)
+
+      res.json(newOrderInstance.products)
     }
   } catch (err) {
     next(err)
@@ -79,113 +55,122 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    req.body.quantity = 1
     if (!req.user) {
-      if (req.session.cart) {
-        req.session.cart.push(req.body)
-      } else {
-        req.session.cart = [req.body]
-      }
-      res.json(req.session.cart)
-    } else {
-      //find or create order for user
-      const order = await Order.findOrCreate({
-        where: {
-          userId: req.user.id,
-          status: 'pending'
+      if (req.session.cart) { //if the cart exist
+        const product = req.session.cart.find((product) => product.id === req.body.id) //find out the product is in the cart
+        if (product) {
+          const index = req.session.cart.indexOf(product)
+          req.session.cart[index].quantity++
+          res.json(req.session.cart[index])
         }
-      })
-      const product = req.body
-      await ProductOrder.create({
-        unitPrice: +product.price * 100,
-        quantity: product.quantity,
-        productId: product.id,
-        orderId: order[0].id
-      })
+        else {
+          req.body.quantity = 1
+          req.session.cart.push(req.body)
+          res.json(req.session.cart[req.session.cart.length - 1])
+        }
+      }
 
-      const updatedOrder = await Order.findById(order[0].id, {
-        include: [{model: Product}]
-      })
-      res.json(updatedOrder)
+      else {
+        req.body.quantity = 1
+        req.session.cart = [req.body]
+        res.json(req.session.cart[0])
+      }
+    } else {
+      const product = req.body
+      console.log('product===>', product)
+      const order = await Order.findOne({ where: { userId: req.user.id, status: "pending" } })
+      console.log('order', order)
+      const existProduct = await ProductOrder.findOne({ where: { productId: product.id, orderId: order.id } })
+      if (existProduct) {
+        const updatedProduct = await existProduct.update({ quantity: existProduct.quantity + product.quantity })
+        res.json(updatedProduct)
+
+      }
+      else {
+        product.quantity = 1
+        const newProduct = await ProductOrder.create({
+          unitPrice: +product.price * 100,
+          quantity: product.quantity,
+          productId: product.id,
+          orderId: order.id
+        })
+        res.json(newProduct)
+      }
     }
   } catch (err) {
     next(err)
   }
 })
 
-// router.post('/', async (req, res, next) => {
-//   try {
-//     if (req.user) {
-//       const order = await Order.findOrCreate({
-//         where: {
-//           userId: req.user.dataValues.id
-//         }
-//       })
 
-//       if (req.session.cart) {
-//         const cart = req.session.cart
-//         cart.forEach(async product => {
-//           try {
-//             await ProductOrder.create({
-//               unitPrice: product.price,
-//               quantity: product.quantity,
-//               productId: product.id,
-//               orderId: order.id
-//             })
-//           } catch (err) {
-//             next(err)
-//           }
-//         })
-//         const updatedOrder = await ProductOrder.findAll({
-//           where: {
-//             orderId: order.id
-//           }
-//         })
-//         res.json(updatedOrder)
-//       }
-//     } else {
-//       if (req.session.cart) {
-//         req.session.cart.push(req.body)
-//       } else {
-//         req.session.cart = [req.body]
-//       }
-//       res.json(req.session.cart)
-//     }
-//   } catch (err) {
-//     next(err)
-//   }
-// })
 
-router.put('/decquantity/:id', (req, res, next) => {
+router.put('/decquantity/:id', async (req, res, next) => {
   const id = +req.params.id
-  const product = req.session.cart.find(product => product.id === id)
-  const index = req.session.cart.indexOf(product)
-  req.session.cart[index].quantity--
-  res.json(req.session.cart[index].quantity)
-})
-
-router.put('/incquantity/:id', (req, res, next) => {
-  const id = +req.params.id
-  const product = req.session.cart.find(product => product.id === id)
-  const index = req.session.cart.indexOf(product)
-  if (!req.session.cart[index].quantity) {
-    req.session.cart[index].quantity = 1
-  } else {
-    req.session.cart[index].quantity++
+  if (!req.user) {
+    const product = req.session.cart.find(product => product.id === id)
+    const index = req.session.cart.indexOf(product)
+    req.session.cart[index].quantity--
+    res.json(req.session.cart[index].quantity)
   }
-  // console.log(req.session.cart[index])
-  res.json(req.session.cart[index].quantity)
+  else {
+    const order = await Order.findOne({ where: { userId: req.user.id, status: "pending" } })
+    const existProduct = await ProductOrder.findOne({ where: { productId: id, orderId: order.id } })
+    const updatedProduct = await existProduct.update({ quantity: existProduct.quantity - 1 })
+    res.json(updatedProduct.quantity)
+
+  }
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/incquantity/:id', async (req, res, next) => {
   const id = +req.params.id
+  if (!req.user) {
+    const product = req.session.cart.find(product => product.id === id)
+    const index = req.session.cart.indexOf(product)
+    if (!req.session.cart[index].quantity) {
+      req.session.cart[index].quantity = 1
+    } else {
+      req.session.cart[index].quantity++
+    }
+    // console.log(req.session.cart[index])
+    res.json(req.session.cart[index].quantity)
+  }
+  else {
+    const order = await Order.findOne({ where: { userId: req.user.id, status: "pending" } })
+    const existProduct = await ProductOrder.findOne({ where: { productId: id, orderId: order.id } })
+    const updatedProduct = await existProduct.update({ quantity: existProduct.quantity + 1 })
+    res.json(updatedProduct.quantity)
 
-  const updatedSession = req.session.cart.filter(product => {
-    return product.id !== id
-  })
-  req.session.cart = updatedSession
+  }
+})
 
-  res.json(req.session.cart)
+
+router.put('/:id', async (req, res, next) => {
+  const id = +req.params.id
+  if (!req.user) {
+    const updatedSession = req.session.cart.filter(product => {
+      return product.id !== id
+    })
+    req.session.cart = updatedSession
+
+    res.json(req.session.cart)
+  }
+  else {
+    const order = await Order.findOne({
+      where: {
+        userId: req.user.id,
+        status: 'pending'
+      }
+    })
+    await ProductOrder.destroy({ where: { orderId: order.id, productId: id } })
+
+    const newOrderInstance = await Order.findById(order.id, {
+      include: [{ all: true }]
+    })
+
+
+    res.json(newOrderInstance.products)
+
+  }
 })
 
 router.delete('/', async (req, res, next) => {
@@ -194,12 +179,13 @@ router.delete('/', async (req, res, next) => {
       req.session.cart = []
       res.json(req.session.cart)
     } else {
-      await Order.destroy({
+      const order = await Order.findOne({
         where: {
           userId: req.user.id,
           status: 'pending'
         }
       })
+      await ProductOrder.destroy({ where: { orderId: order.id } })
       res.json(204)
     }
   } catch (err) {
