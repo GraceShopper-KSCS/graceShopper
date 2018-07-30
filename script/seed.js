@@ -202,7 +202,7 @@ async function seed() {
       'https://images-na.ssl-images-amazon.com/images/I/51vYMYLZiuL._SX386_BO1,204,203,200_.jpg',
     inventory: 33,
     category: 'HTML'
-
+  })
 
   await html.addProduct(book6)
   await beginner.addProduct(book6)
