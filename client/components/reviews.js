@@ -1,10 +1,14 @@
 import React, {Component} from 'react'
 import Rating from 'react-rating'
+import {Redirect} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 
 class Reviews extends Component {
   constructor() {
     super()
     this.makeStars = this.makeStars.bind(this)
+    this.onClickCustomerReview = this.onClickCustomerReview.bind(this)
   }
   makeStars(rating) {
     let stars = []
@@ -14,10 +18,17 @@ class Reviews extends Component {
     }
     return stars
   }
+  onClickCustomerReview() {
+    console.log('On click called ')
+    this.props.history.push(`/addReviews`)
+  }
   render() {
     if (this.props.reviews != 'undefined') {
       return (
         <div>
+          <button onClick={this.onClickCustomerReview}>
+            Write a customer review!
+          </button>
           {this.props.reviews &&
             this.props.reviews.map(review1 => (
               <div key={review1.id}>
@@ -31,7 +42,9 @@ class Reviews extends Component {
                 <h5>
                   <span>Title: {review1.title}</span>
                 </h5>
-                <h6>By:{review1.user.email}</h6>
+                <h6>
+                  {/* By:{review1.user != 'undefined' ? review1.user.email : ''} */}
+                </h6>
                 <h5>
                   <span>Comment: {review1.content}</span>
                 </h5>
@@ -45,4 +58,5 @@ class Reviews extends Component {
   }
 }
 
-export default Reviews
+// export default connect(null, null)(Reviews)
+export default withRouter(connect(null, null)(Reviews))
