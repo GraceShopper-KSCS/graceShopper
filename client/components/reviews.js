@@ -30,9 +30,9 @@ class Reviews extends Component {
             Write a customer review!
           </button>
           {this.props.reviews &&
-            this.props.reviews.map(review1 => (
+            this.props.reviews.map(singleReview => (
               <div
-                key={review1.id}
+                key={singleReview.id}
                 className="w3-card w3-light-grey
               "
               >
@@ -40,16 +40,17 @@ class Reviews extends Component {
                   {/* <Rater rating={review.rating} total={5} /> */}
 
                   <span>
-                    Rating: <Rating initialRating={review1.rating} readonly />
+                    Rating:{' '}
+                    <Rating initialRating={singleReview.rating} readonly />
                   </span>
                 </h5>
-                <h6>By:{review1.user.email}</h6>
+                <h6>By:{singleReview.user.email}</h6>
                 <h5>
-                  <span>Title: {review1.title}</span>
+                  <span>Title: {singleReview.title}</span>
                 </h5>
 
                 <h5>
-                  <span>Comment: {review1.content}</span>
+                  <span>Comment: {singleReview.content}</span>
                 </h5>
               </div>
             ))}
