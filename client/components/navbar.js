@@ -4,8 +4,14 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logout, me } from '../store'
 import SelectCategory from './selectCatagory'
+<<<<<<< HEAD
 import { getSelectCat } from '../store/products'
 import { fetchCart, mergeCartThunk } from '../store/cart'
+=======
+import {getSelectCat} from '../store/products'
+import {fetchCart} from '../store/cart'
+import {getHistoryThunk} from '../store/history'
+>>>>>>> master
 
 
 const Navbar = ({ handleClick, isLoggedIn, getSelectCat, fetchCart, mergeCartThunk }) => (
@@ -30,14 +36,22 @@ const Navbar = ({ handleClick, isLoggedIn, getSelectCat, fetchCart, mergeCartThu
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
+          <Link to="/orders/history">
+            <button type="button" onClick={() => this.props.getHistoryThunk()}>
+              See Order History
+            </button>
+          </Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
         </div>
       ) : (
+
+
           <div>
             {/* The navbar will show these links before you log in */}
-            <Link to="/login"> Login</Link>
+            <Link to="/login">Login</Link>
+
             <Link to="/signup">Sign Up</Link>
           </div>
         )}
@@ -64,6 +78,10 @@ const mapDispatch = dispatch => {
     getSelectCat: val => dispatch(getSelectCat(val)),
 
     fetchCart: () => dispatch(fetchCart()),
+<<<<<<< HEAD
+=======
+    getHistoryThunk: () => dispatch(getHistoryThunk())
+>>>>>>> master
 
     mergeCartThunk: () => dispatch(mergeCartThunk()),
     me: () => dispatch(me())
