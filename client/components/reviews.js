@@ -1,10 +1,14 @@
 import React, {Component} from 'react'
 import Rating from 'react-rating'
+import {Redirect} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 
 class Reviews extends Component {
   constructor() {
     super()
     this.makeStars = this.makeStars.bind(this)
+    this.onClickCustomerReview = this.onClickCustomerReview.bind(this)
   }
   makeStars(rating) {
     let stars = []
@@ -14,26 +18,39 @@ class Reviews extends Component {
     }
     return stars
   }
+  onClickCustomerReview() {
+    console.log('On click called ')
+    this.props.history.push(`/addReviews`)
+  }
   render() {
     if (this.props.reviews != 'undefined') {
       return (
         <div>
+          <button onClick={this.onClickCustomerReview}>
+            Write a customer review!
+          </button>
           {this.props.reviews &&
-            this.props.reviews.map(review1 => (
-              <div key={review1.id}>
+            this.props.reviews.map(singleReview => (
+              <div
+                key={singleReview.id}
+                className="w3-card w3-light-grey
+              "
+              >
                 <h5>
                   {/* <Rater rating={review.rating} total={5} /> */}
 
                   <span>
-                    Rating: <Rating initialRating={review1.rating} readonly />
+                    Rating:{' '}
+                    <Rating initialRating={singleReview.rating} readonly />
                   </span>
                 </h5>
+                <h6>By:{singleReview.user.email}</h6>
                 <h5>
-                  <span>Title: {review1.title}</span>
+                  <span>Title: {singleReview.title}</span>
                 </h5>
-                <h6>By:{review1.user.email}</h6>
+
                 <h5>
-                  <span>Comment: {review1.content}</span>
+                  <span>Comment: {singleReview.content}</span>
                 </h5>
               </div>
             ))}
@@ -45,4 +62,4 @@ class Reviews extends Component {
   }
 }
 
-export default Reviews
+export default withRouter(connect(null, null)(Reviews))

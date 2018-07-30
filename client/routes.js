@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import ProductList from './components/productList'
 import Navbar from './components/navbar'
-
+import AddReviews from './components/addReview'
 import AddProduct from './components/addProduct'
 import {me} from './store'
 import SingleBook from './components/singleBook'
@@ -33,7 +33,7 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/cart" component={viewCart} />
           <Route path="/orders/history" component={OrderHistory} />
-
+          <Route path="/addReviews" component={AddReviews} />
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
