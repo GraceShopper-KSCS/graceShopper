@@ -24,6 +24,9 @@ class AddReviews extends Component {
     this.setState({
       productId: this.props.selectedProduct.id
     })
+    this.setState({
+      userId: this.props.user.id
+    })
   }
 
   handleSubmit = async event => {
@@ -88,7 +91,8 @@ const mapDispatchToProps = dispatch => {
   }
 }
 const mapStateToProps = state => ({
-  selectedProduct: state.products.selectedProduct
+  selectedProduct: state.products.selectedProduct,
+  user: state.user
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddReviews)

@@ -31,7 +31,11 @@ class Reviews extends Component {
           </button>
           {this.props.reviews &&
             this.props.reviews.map(review1 => (
-              <div key={review1.id}>
+              <div
+                key={review1.id}
+                className="w3-card w3-light-grey
+              "
+              >
                 <h5>
                   {/* <Rater rating={review.rating} total={5} /> */}
 
@@ -39,12 +43,11 @@ class Reviews extends Component {
                     Rating: <Rating initialRating={review1.rating} readonly />
                   </span>
                 </h5>
+                <h6>By:{review1.user.email}</h6>
                 <h5>
                   <span>Title: {review1.title}</span>
                 </h5>
-                <h6>
-                  {/* By:{review1.user != 'undefined' ? review1.user.email : ''} */}
-                </h6>
+
                 <h5>
                   <span>Comment: {review1.content}</span>
                 </h5>
