@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, Product, ProductOrder} = require('../db/models/')
+const { Order, Product, ProductOrder } = require('../db/models/')
 
 ///need to add a beforeCreate hook? that checks if there is already a
 
@@ -59,8 +59,8 @@ router.get('/', async (req, res, next) => {
       }
       //find all orders for logged in user with status 'pending'
       const updatedCart = await Order.findAll({
-        where: {userId: req.user.dataValues.id, status: 'pending'},
-        include: [{model: Product}]
+        where: { userId: req.user.dataValues.id, status: 'pending' },
+        include: [{ model: Product }]
       })
       let newProductsArr = []
       //combine all items from multiple orders into one array for new cart
@@ -104,8 +104,9 @@ router.post('/', async (req, res, next) => {
       })
 
       const updatedOrder = await Order.findById(order[0].id, {
-        include: [{model: Product}]
+        include: [{ model: Product }]
       })
+      console.log(updatedOrder)
       res.json(updatedOrder)
     }
   } catch (err) {
