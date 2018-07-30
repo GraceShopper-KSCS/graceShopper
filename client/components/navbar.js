@@ -4,24 +4,10 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import SelectCategory from './selectCatagory'
+import {getSelectCat} from '../store/products'
+import {fetchCart} from '../store/cart'
 
-import {
-  getSelectCat,
-  fetchCategories,
-  fetchFiltered,
-  setFilteredThunk
-} from '../store/products'
-
-import {getCart} from '../store/products'
-
-const Navbar = ({
-  handleClick,
-  isLoggedIn,
-  getSelectCat,
-  fetchFiltered,
-  setFilteredThunk,
-  filtered
-}) => (
+const Navbar = ({handleClick, isLoggedIn, getSelectCat, fetchCart}) => (
   <div>
     <h1>Codebrary</h1>
     <nav>
@@ -34,7 +20,8 @@ const Navbar = ({
       >
         All books
       </Link>
-      <Link to="/cart" onClick={() => getCart()}>
+
+      <Link to="/cart" onClick={() => fetchCart()}>
         View Cart{' '}
       </Link>
 
@@ -74,8 +61,11 @@ const mapDispatch = dispatch => {
       dispatch(logout())
     },
     getSelectCat: val => dispatch(getSelectCat(val)),
-    fetchFiltered: category => dispatch(fetchFiltered(category)),
-    setFilteredThunk: () => dispatch(setFilteredThunk())
+
+    fetchCart: () => dispatch(fetchCart())
+
+    // fetchFiltered: category => dispatch(fetchFiltered(category)),
+    // setFilteredThunk: () => dispatch(setFilteredThunk())
   }
 }
 
@@ -88,3 +78,19 @@ Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
+
+// import {
+//   getSelectCat,
+//   fetchCategories,
+//   fetchFiltered,
+//   setFilteredThunk
+// } from '../store/products'
+
+// const Navbar = ({
+//   handleClick,
+//   isLoggedIn,
+//   getSelectCat,
+//   fetchFiltered,
+//   setFilteredThunk,
+//   filtered
+// }) => (

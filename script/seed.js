@@ -28,10 +28,12 @@ async function seed() {
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
     User.create({email: 'murphy@email.com', password: '123'}),
     User.create({email: 'admin@email.com', password: 'admin', admin: true})
   ])
+
+  const cody = await User.create({email: 'cody@email.com', password: '123'})
+
   const reviews = await Promise.all([
     Review.create({
       title: 'Enjoyed this Code Book',
@@ -195,15 +197,16 @@ async function seed() {
     Design and build interactive forms and dynamic documents
     Insert images, sound files, video, Java applets, and JavaScript programs
     Create documents that look good on a variety of browsers`,
-    price: 14.95,
+    price: 1495,
     imageUrl:
       'https://images-na.ssl-images-amazon.com/images/I/51vYMYLZiuL._SX386_BO1,204,203,200_.jpg',
     inventory: 33,
     category: 'HTML'
-  })
+
 
   await html.addProduct(book6)
   await beginner.addProduct(book6)
+
 
   ///Orders
 
@@ -238,7 +241,44 @@ async function seed() {
 
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
+
+  const order1 = await Order.create({
+    status: 'pending',
+    userId: cody.id
+  })
+  const order1Line = await ProductOrder.create({
+    orderId: order1.id,
+    quantity: '3',
+    productId: 1,
+    unitPrice: 1495
+  })
+
+  //const newBook2 = {...newBook, unitPrice: newBook.price, quantity: 3}
+
+  // await order1.addProduct(newBook, {unitPrice: 3303, quantity: '4'})
+  // const newLine4 = await order1.addProduct(newBook, {unitPrice: 3303, quantity: '3'})
+  // let newInstance = newLine4[0]
+  // console.log('********', newInstance[0].dataValues)
+  //  const newInstance = await ProductOrder.findById(newLine4.id)
+  //newInstance = await newInstance.update({unitPrice: 3303, quantity: '4'})
+  // await ProductOrder.update(
+  //   {unitPrice: 3303, quantity: '4'},
+  //   {
+  //     where: {
+  //       id: newLine4.id
+  //     }
+  //   }
+  // )
+  const order1Line2 = await ProductOrder.create({
+    orderId: order1.id,
+    quantity: '1',
+    productId: 2,
+    unitPrice: 2158
+  })
+
+
   console.log(`seeded ${users.length} users and ${reviews.length} reviews`)
+
   // console.log(
   //   `seeded ${users.length} users, ${categories.length} categories and ${
   //     products.length
