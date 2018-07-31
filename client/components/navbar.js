@@ -4,14 +4,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logout, me } from '../store'
 import SelectCategory from './selectCatagory'
-<<<<<<< HEAD
 import { getSelectCat } from '../store/products'
 import { fetchCart, mergeCartThunk } from '../store/cart'
-=======
-import {getSelectCat} from '../store/products'
-import {fetchCart} from '../store/cart'
-import {getHistoryThunk} from '../store/history'
->>>>>>> master
+
 
 
 const Navbar = ({ handleClick, isLoggedIn, getSelectCat, fetchCart, mergeCartThunk }) => (
@@ -78,12 +73,8 @@ const mapDispatch = dispatch => {
     getSelectCat: val => dispatch(getSelectCat(val)),
 
     fetchCart: () => dispatch(fetchCart()),
-<<<<<<< HEAD
-=======
-    getHistoryThunk: () => dispatch(getHistoryThunk())
->>>>>>> master
+    getHistoryThunk: () => dispatch(getHistoryThunk()),
 
-    mergeCartThunk: () => dispatch(mergeCartThunk()),
     me: () => dispatch(me())
   }
 }

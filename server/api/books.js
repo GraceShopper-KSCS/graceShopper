@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const {Product, Category, Tags} = require('../db/models')
+const { Product, Category, Tags } = require('../db/models')
 
 module.exports = router
 
@@ -30,7 +30,7 @@ router.get('/filter/:category', async (req, res, next) => {
       where: {
         name: category
       },
-      include: [{model: Product}]
+      include: [{ model: Product }]
     })
     res.json(cat)
   } catch (err) {

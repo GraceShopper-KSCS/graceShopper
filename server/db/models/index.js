@@ -25,10 +25,10 @@ Review.belongsTo(User)
 User.hasMany(Review)
 Order.belongsTo(User)
 User.hasMany(Order)
-Product.belongsToMany(Order, {through: ProductOrder})
-Order.belongsToMany(Product, {through: ProductOrder})
-Product.belongsToMany(Category, {through: 'tags'})
-Category.belongsToMany(Product, {through: 'tags'})
+Product.belongsToMany(Order, { through: ProductOrder })
+Order.belongsToMany(Product, { through: ProductOrder })
+Product.belongsToMany(Category, { through: 'tags' })
+Category.belongsToMany(Product, { through: 'tags' })
 
 module.exports = {
   User,
@@ -36,5 +36,6 @@ module.exports = {
   Order,
   Review,
   ProductOrder,
-  Category
+  Category,
+  db
 }
