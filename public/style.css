@@ -8,14 +8,35 @@ a {
 
 label {
   display: block;
+  padding: 1em;
 }
 
 nav a {
   display: inline-block;
   margin: 1em;
+  font-size: 1.2em;
 }
-
+.active {
+  background-color: #4caf50;
+}
 form div {
   margin: 1em;
   display: inline-block;
+}
+.header {
+  display: inline;
+}
+.spaceCat {
+  margin: 1em;
+}
+.flex-container {
+  display: flex;
+}
+.h1-default {
+  font-size: 1.5rem !important;
+}
+nav > h1 {
+  font-style: italic;
+  font-weight: bold;
+  color: rgb(89, 89, 128);
 }
