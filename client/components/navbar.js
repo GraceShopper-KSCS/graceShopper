@@ -8,6 +8,23 @@ import {getSelectCat, setFilteredThunk} from '../store/products'
 import {fetchCart, mergeCartThunk} from '../store/cart'
 import {getHistoryThunk} from '../store/history'
 
+{
+  /* <ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul> */
+}
+
 const Navbar = ({
   handleClick,
   isLoggedIn,
@@ -17,51 +34,54 @@ const Navbar = ({
   setFilteredThunk,
   getHistoryThunk
 }) => (
-  <div>
-    <h1>Codebrary</h1>
-    <nav>
-      <Link
-        to="/books"
-        onClick={() => {
-          getSelectCat('')
-          setFilteredThunk()
-        }}
-      >
-        All books
-      </Link>
+  <div className="header">
+    {/* <h1 className="heading">Codebrary</h1> */}
 
-      <Link to="/cart" onClick={() => fetchCart()}>
-        View Cart{' '}
-      </Link>
+    <nav className="flex-container">
+      <h1>Codebrary</h1>
+      <ul className="nav justify-content-end">
+        <Link
+          to="/books"
+          onClick={() => {
+            getSelectCat('')
+            setFilteredThunk()
+          }}
+        >
+          All books
+        </Link>
 
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/orders/history">
-            <button
-              type="button"
-              onClick={async () => {
-                await getHistoryThunk()
-              }}
-            >
-              See Order History
-            </button>
-          </Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
+        <Link to="/cart" onClick={() => fetchCart()}>
+          View Cart{' '}
+        </Link>
 
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
+        {isLoggedIn ? (
+          <div>
+            {/* The navbar will show these links after you log in */}
+            <Link to="/home" className="active">
+              Home
+            </Link>
+            <Link to="/orders/history">
+              <button
+                type="button"
+                onClick={async () => await getHistoryThunk()}
+              >
+                See Order History
+              </button>
+            </Link>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
+        ) : (
+          <div>
+            {/* The navbar will show these links before you log in */}
+            <Link to="/login">Login</Link>
+
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        )}
+      </ul>
     </nav>
-    <hr />
   </div>
 )
 

@@ -44,36 +44,49 @@ class ViewCart extends Component {
       return (
         <div>
           <div>
-            <button>Checkout</button>
-            <button type="button" onClick={() => this.props.emptyCartThunk()}>
+            <button className="btn btn-outline-info">Checkout</button>
+            <button
+              type="button"
+              onClick={() => this.props.emptyCartThunk()}
+              className="btn btn-outline-info"
+            >
               Empty Cart
             </button>
-            {this.props.cart.map(book => {
-              if (!this.props.cart[0].productorder) {
-                totalPrice += book.totalprice
-              }
-              return <ProductCard key={book.id} product={book} />
-            })}
+
+            <div className="card-deck">
+              {this.props.cart.map(book => {
+                if (!this.props.cart[0].productorder) {
+                  totalPrice += book.totalprice
+                }
+                return <ProductCard key={book.id} product={book} />
+              })}
+            </div>
             {this.props.cart[0].productorder ? (
-              <h3>Total: ${this.props.totalPrice / 100}</h3>
+              <h3 className="total">Total: ${this.props.totalPrice / 100}</h3>
             ) : (
-              <h3>Total: ${totalPrice.toFixed(2)}</h3>
+              <h3 className="total">Total: ${totalPrice.toFixed(2)}</h3>
             )}
-          </div>
-          <div>
-            {this.props.user.id ? (
-              <div>
-                <Link to="/checkout">
-                  <button>Checkout Cart</button>
-                </Link>
-              </div>
-            ) : (
-              <div>
-                <button onClick={() => this.loginPropmp()}>
-                  Checkout Cart
-                </button>
-              </div>
-            )}
+
+            <div>
+              {this.props.user.id ? (
+                <div>
+                  <Link to="/checkout">
+                    <button className="btn btn-outline-info">
+                      Checkout Cart
+                    </button>
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <button
+                    onClick={() => this.loginPropmp()}
+                    className="btn btn-outline-info"
+                  >
+                    Checkout Cart
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )

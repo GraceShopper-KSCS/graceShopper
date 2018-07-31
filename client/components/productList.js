@@ -42,29 +42,33 @@ class ProductList extends Component {
         return (
           <div>
             <h1> {this.props.selectCategory} Books</h1>
-            <div>
+            <div className="container">
               <SelectCategory handleSubmit={this.handleSubmit} />
-              {this.props.filtered.map(product => {
-                return (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    handleSubmit={this.handleSubmit}
-                  />
-                )
-              })}
+              <div className="card-deck">
+                {this.props.filtered.map(product => {
+                  return (
+                    <ProductCard
+                      product={product}
+                      key={product.id}
+                      handleSubmit={this.handleSubmit}
+                    />
+                  )
+                })}
+              </div>
             </div>
           </div>
         )
       } else {
         return (
           <div>
-            <h1>All Books</h1>
+            <h1 className="h1-default">All Books</h1>
             <div>
               <SelectCategory handleSubmit={this.handleSubmit} />
-              {this.props.products.map(product => {
-                return <ProductCard key={product.id} product={product} />
-              })}
+              <div className="card-deck">
+                {this.props.products.map(product => {
+                  return <ProductCard key={product.id} product={product} />
+                })}
+              </div>
             </div>
           </div>
         )
