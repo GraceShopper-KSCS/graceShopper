@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import { connect } from 'react-redux'
+import { fetchCart, fetchTotalSum } from '../store/cart'
+
 
 class Quantity extends Component {
     constructor() {
@@ -11,19 +14,35 @@ class Quantity extends Component {
         this.DecreaseItem = this.DecreaseItem.bind(this)
     }
     componentDidMount() {
-        this.setState({ clicks: this.props.product.quantity })
+        if (this.props.product.productorder) {
+            this.setState({ clicks: this.props.product.productorder.quantity })
+        }
+        else {
+            this.setState({ clicks: this.props.product.quantity })
+        }
     }
+
 
     async IncrementItem() {
         this.setState({ clicks: this.state.clicks + 1 });
         const res = await axios.put(`/api/cart/incquantity/${this.props.product.id}`)
         this.setState({ clicks: res.data })
+        this.props.fetchCart()
+        if (this.props.user) {
+            this.props.fetchTotalSum()
+        }
+
     }
 
     async DecreaseItem() {
         this.setState({ clicks: this.state.clicks - 1 });
         const res = await axios.put(`/api/cart/decquantity/${this.props.product.id}`)
         this.setState({ clicks: res.data })
+        this.props.fetchCart()
+        if (this.props.user) {
+            this.props.fetchTotalSum()
+        }
+
     }
 
     render() {
@@ -37,4 +56,18 @@ class Quantity extends Component {
     }
 }
 
-export default Quantity;
+const mapStateToProps = state => ({
+    user: state.user
+
+})
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchCart: () => dispatch(fetchCart()),
+        fetchTotalSum: () => dispatch(fetchTotalSum())
+    }
+}
+
+const ConnectQuantity = connect(mapStateToProps, mapDispatchToProps)(Quantity)
+
+export default ConnectQuantity
+

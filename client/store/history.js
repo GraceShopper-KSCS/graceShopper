@@ -30,9 +30,9 @@ export const getHistoryThunk = () => async dispatch => {
   }
 }
 
-export const submitOrderThunk = order => async dispatch => {
+export const submitOrderThunk = () => async dispatch => {
   try {
-    const res = await axios.put('/api/orders', order)
+    const res = await axios.put('/api/orders')
     dispatch(submitOrder(res.data))
   } catch (err) {
     console.error(err)

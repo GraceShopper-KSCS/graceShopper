@@ -11,6 +11,8 @@ import {me} from './store'
 import SingleBook from './components/singleBook'
 import viewCart from './components/viewCart'
 import OrderHistory from './components/orderHistory'
+import CheckoutFormWrapper from './components/checkoutFormWrapper'
+import CheckoutForm from './components/checkoutForm'
 
 /**
  * COMPONENT
@@ -20,7 +22,7 @@ class Routes extends Component {
     this.props.loadInitialData()
   }
 
-  render() {
+  render(props) {
     const {isLoggedIn, isAdmin} = this.props
 
     return (
@@ -39,6 +41,7 @@ class Routes extends Component {
               {/* Routes placed here are only available after logging in */}
               <Route path="/home" component={UserHome} />
               {isAdmin ? <Route path="/add" component={AddProduct} /> : null}
+              <Route path="/checkout" component={CheckoutFormWrapper} />
             </Switch>
           )}
           {/* Displays our Login component as a fallback */}

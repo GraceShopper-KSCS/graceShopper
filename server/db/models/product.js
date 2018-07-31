@@ -28,7 +28,7 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER,
     allowNull: false,
     get() {
-      return (0.01 * this.getDataValue('price')).toFixed(2)
+      return Math.round(this.getDataValue('price')) / 100
     },
     set(val) {
       this.setDataValue('price', val * 100)
@@ -49,9 +49,9 @@ const Product = db.define('product', {
     type: Sequelize.STRING
   }
 })
-Product.prototype.averageRating = async function() {
+Product.prototype.averageRating = async function () {
   const reviews = await Review.findAll({
-    where: {productid: this.id}
+    where: { productid: this.id }
   })
   if (reviews) {
     const total = reviews.reduce((sum, review) => sum + review.rating, 0)

@@ -7,6 +7,8 @@ const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const EMPTY_CART = 'EMPTY_CART'
+const GET_TOTAL_PRICE = 'GET_TOTAL_PRICE'
+
 
 
 /**
@@ -14,7 +16,8 @@ const EMPTY_CART = 'EMPTY_CART'
  */
 const initialState = {
   cart: [],
-  selectedProduct: {}
+  selectedProduct: {},
+  totalPrice: 0
 }
 
 /**
@@ -24,6 +27,12 @@ export const getCart = cart => ({
   type: GET_CART,
   cart
 })
+
+export const getSum = totalPrice => ({
+  type: GET_TOTAL_PRICE,
+  totalPrice
+})
+
 
 export const addToCart = product => ({ type: ADD_TO_CART, product })
 
@@ -44,6 +53,15 @@ export const fetchCart = () => async dispatch => {
   try {
     const res = await axios.get('/api/cart')
     dispatch(getCart(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const fetchTotalSum = () => async dispatch => {
+  try {
+    const sum = await axios.get('/api/orders/totalprice')
+    dispatch(getSum(sum.data))
   } catch (err) {
     console.error(err)
   }
@@ -76,6 +94,14 @@ export const emptyCartThunk = () => async dispatch => {
   }
 }
 
+export const mergeCartThunk = () => async dispatch => {
+  try {
+    await axios.put('/api/cart')
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -88,13 +114,31 @@ export default function (state = initialState, action) {
         cart: action.cart
       }
     case ADD_TO_CART: {
-      return { ...state, cart: [...state.cart, action.product] }
+      const product = state.cart.find(product => product.id === action.product.id)
+      if (product) {
+        const newcart = state.cart.filter(item => item.id !== product.id)
+        if (product.productorder) {
+          product.productorder.quantity++
+        }
+        else {
+
+          product.quantity++
+        }
+        return { ...state, cart: [...newcart, product] }
+
+      }
+      else {
+        return { ...state, cart: [...state.cart, action.product] }
+      }
     }
     case REMOVE_FROM_CART: {
       return { ...state, cart: action.updatedCart }
     }
     case EMPTY_CART: {
       return { ...state, cart: [] }
+    }
+    case GET_TOTAL_PRICE: {
+      return { ...state, totalPrice: action.totalPrice }
     }
     default:
       return state

@@ -52,8 +52,7 @@ router.put('/', async (req, res, next) => {
         status: 'pending'
       }
     })
-    const updatedOrder = await order.update({status: 'processing'})
-
+    const updatedOrder = await order.update({status: 'complete'})
     res.json(updatedOrder)
   } catch (err) {
     next(err)
