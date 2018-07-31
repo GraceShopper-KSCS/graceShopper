@@ -1,21 +1,31 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import ProductCard from './productCard'
-import { connect } from 'react-redux'
-import { fetchCart, emptyCartThunk } from '../store/cart'
-import { getHistoryThunk } from '../store/history'
-import { Link } from 'react-router-dom'
-
+import {connect} from 'react-redux'
+import {fetchCart, emptyCartThunk} from '../store/cart'
+import {getHistoryThunk} from '../store/history'
+import {Link, Redirect} from 'react-router-dom'
 
 class ViewCart extends Component {
   constructor() {
     super()
+    this.loginPropmp = this.loginPropmp.bind(this)
   }
   async componentDidMount() {
     const cart = await this.props.fetchCart()
-    console.log('======>', this.props.cart)
+  }
+
+  loginPropmp = () => {
+    //const login = confirm('Please log in')
+    if (window.confirm('Please log in')) {
+      console.log('DADADA')
+      this.props.history.push('/login')
+    } else {
+      console.log('TOO BAD')
+    }
   }
   render() {
     let totalPrice = 0
+    console.log('>>>USER>>>', this.props.user)
     if (!this.props.cart.length) {
       return (
         <div>
@@ -37,9 +47,13 @@ class ViewCart extends Component {
           </div>
           <div>
             <h3>Total: {totalPrice}</h3>
-            <Link to="/checkout">
-              <button>Checkout Cart</button>
-            </Link>
+            {this.props.user.id ? (
+              <Link to="/checkout">
+                <button>Checkout Cart</button>
+              </Link>
+            ) : (
+              <button onClick={() => this.loginPropmp()}>Checkout Cart</button>
+            )}
           </div>
         </div>
       )
@@ -50,7 +64,7 @@ class ViewCart extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.cart.cart,
-    user: state.user.user
+    user: state.user
   }
 }
 
