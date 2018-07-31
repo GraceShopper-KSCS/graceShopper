@@ -1,18 +1,29 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import ProductCard from './productCard'
-import {connect} from 'react-redux'
-import {fetchCart, emptyCartThunk} from '../store/cart'
-import {getHistoryThunk} from '../store/history'
-import {Link, Redirect} from 'react-router-dom'
+import { connect } from 'react-redux'
+import { fetchCart, emptyCartThunk, fetchTotalSum } from '../store/cart'
+import { getHistoryThunk } from '../store/history'
+import axios from 'axios'
+
+
+import { Link, Redirect } from 'react-router-dom'
+
 
 class ViewCart extends Component {
   constructor() {
     super()
+    this.state = {
+      totalorderprice: 0
+    }
     this.loginPropmp = this.loginPropmp.bind(this)
   }
   async componentDidMount() {
     const cart = await this.props.fetchCart()
+    if (this.props.cart[0].productorder) {
+      this.props.fetchTotalSum()
+    }
   }
+
 
   loginPropmp = () => {
     //const login = confirm('Please log in')
@@ -24,6 +35,7 @@ class ViewCart extends Component {
     }
   }
   render() {
+    console.log('total', this.state.totalorderprice)
     let totalPrice = 0
     if (!this.props.cart.length) {
       return (
@@ -40,30 +52,32 @@ class ViewCart extends Component {
               Empty Cart
             </button>
             {this.props.cart.map(book => {
+              if (!this.props.cart[0].productorder) {
 
-              totalPrice += book.totalprice
+                totalPrice += book.totalprice
+              }
               return <ProductCard key={book.id} product={book} />
             })}
+            {(this.props.cart[0].productorder)
+              ? <h3>Total: ${this.props.totalPrice / 100}</h3>
+              : <h3>Total: ${totalPrice.toFixed(2)}</h3>
+            }
           </div>
           <div>
 
-            
             {this.props.user.id ? (
               <div>
-              <h3>Total: {totalPrice}</h3>
-              <Link to="/checkout">
-                <button>Checkout Cart</button>
-              </Link>
+                <Link to="/checkout">
+                  <button>Checkout Cart</button>
+                </Link>
               </div>
             ) : (
-              <div>
-              <h3>Total: ${totalPrice.toFixed(2)}</h3>
-              <button onClick={() => this.loginPropmp()}>Checkout Cart</button>
-              </div>
-            )}
-
+                <div>
+                  <button onClick={() => this.loginPropmp()}>Checkout Cart</button>
+                </div>
+              )}
           </div>
-        </div>
+        </div >
       )
     }
   }
@@ -72,6 +86,7 @@ class ViewCart extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.cart.cart,
+    totalPrice: state.cart.totalPrice,
     user: state.user
   }
 }
@@ -79,7 +94,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchCart: () => dispatch(fetchCart()),
-    emptyCartThunk: () => dispatch(emptyCartThunk())
+    emptyCartThunk: () => dispatch(emptyCartThunk()),
+    fetchTotalSum: () => dispatch(fetchTotalSum())
+
   }
 }
 
