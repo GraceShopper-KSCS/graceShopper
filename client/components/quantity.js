@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { fetchCart } from '../store/cart'
+import { fetchCart, fetchTotalSum } from '../store/cart'
 
 
 class Quantity extends Component {
@@ -28,6 +28,9 @@ class Quantity extends Component {
         const res = await axios.put(`/api/cart/incquantity/${this.props.product.id}`)
         this.setState({ clicks: res.data })
         this.props.fetchCart()
+        if (this.props.user) {
+            this.props.fetchTotalSum()
+        }
 
     }
 
@@ -36,6 +39,9 @@ class Quantity extends Component {
         const res = await axios.put(`/api/cart/decquantity/${this.props.product.id}`)
         this.setState({ clicks: res.data })
         this.props.fetchCart()
+        if (this.props.user) {
+            this.props.fetchTotalSum()
+        }
 
     }
 
@@ -56,7 +62,8 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => {
     return {
-        fetchCart: () => dispatch(fetchCart())
+        fetchCart: () => dispatch(fetchCart()),
+        fetchTotalSum: () => dispatch(fetchTotalSum())
     }
 }
 
