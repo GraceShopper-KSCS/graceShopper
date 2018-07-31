@@ -1,15 +1,18 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import ProductCard from './productCard'
-import {connect} from 'react-redux'
-import {fetchCart, emptyCartThunk} from '../store/cart'
-import {Link} from 'react-router-dom'
+import { connect } from 'react-redux'
+import { fetchCart, emptyCartThunk } from '../store/cart'
+import { getHistoryThunk } from '../store/history'
+import { Link } from 'react-router-dom'
+
 
 class ViewCart extends Component {
   constructor() {
     super()
   }
   async componentDidMount() {
-    await this.props.fetchCart()
+    const cart = await this.props.fetchCart()
+    console.log('======>', this.props.cart)
   }
   render() {
     let totalPrice = 0

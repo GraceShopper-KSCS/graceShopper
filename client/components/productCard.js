@@ -23,7 +23,7 @@ class ProductCard extends Component {
         {!this.props.location.pathname.includes('cart') ? (
           <button
             type="button"
-            onClick={() => this.props.addToCartThunk(product)}
+            onClick={async () => await this.props.addToCartThunk(product)}
           >
             Add To Cart
           </button>

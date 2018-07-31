@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import { connect } from 'react-redux'
 
 class Quantity extends Component {
     constructor() {
@@ -11,8 +12,14 @@ class Quantity extends Component {
         this.DecreaseItem = this.DecreaseItem.bind(this)
     }
     componentDidMount() {
-        this.setState({ clicks: this.props.product.quantity })
+        if (this.props.product.productorder) {
+            this.setState({ clicks: this.props.product.productorder.quantity })
+        }
+        else {
+            this.setState({ clicks: this.props.product.quantity })
+        }
     }
+
 
     async IncrementItem() {
         this.setState({ clicks: this.state.clicks + 1 });
@@ -37,4 +44,12 @@ class Quantity extends Component {
     }
 }
 
-export default Quantity;
+const mapStateToProps = state => ({
+    user: state.user
+
+})
+
+const ConnectQuantity = connect(mapStateToProps)(Quantity)
+
+export default ConnectQuantity
+

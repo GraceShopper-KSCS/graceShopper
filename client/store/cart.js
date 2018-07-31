@@ -76,6 +76,14 @@ export const emptyCartThunk = () => async dispatch => {
   }
 }
 
+export const mergeCartThunk = () => async dispatch => {
+  try {
+    await axios.put('/api/cart')
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -88,7 +96,16 @@ export default function (state = initialState, action) {
         cart: action.cart
       }
     case ADD_TO_CART: {
-      return { ...state, cart: [...state.cart, action.product] }
+      const product = state.cart.find(product => product.id === action.product.id)
+      if (product) {
+        const newcart = state.cart.filter(item => item.id !== product.id)
+        product.quantity++
+        return { ...state, cart: [...newcart, product] }
+
+      }
+      else {
+        return { ...state, cart: [...state.cart, action.product] }
+      }
     }
     case REMOVE_FROM_CART: {
       return { ...state, cart: action.updatedCart }
