@@ -15,14 +15,13 @@ class ViewCart extends Component {
     this.state = {
       totalorderprice: 0
     }
+    this.loginPropmp = this.loginPropmp.bind(this)
   }
   async componentDidMount() {
     const cart = await this.props.fetchCart()
     if (this.props.cart[0].productorder) {
       this.props.fetchTotalSum()
     }
-
-    this.loginPropmp = this.loginPropmp.bind(this)
   }
 
 
