@@ -35,7 +35,9 @@ class ViewCart extends Component {
           </div>
           <div>
             <h3>Total: {totalPrice}</h3>
-            <button>Checkout Cart</button>
+            <Link to="/checkout">
+              <button>Checkout Cart</button>
+            </Link>
           </div>
         </div>
       )
