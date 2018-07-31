@@ -1,8 +1,10 @@
 /* global describe beforeEach it */
 
-const {expect} = require('chai')
+const { expect } = require('chai')
 const db = require('../index')
 const User = db.model('user')
+
+
 
 describe('User model', () => {
   beforeEach(() => {
@@ -18,6 +20,14 @@ describe('User model', () => {
           email: 'cody@puppybook.com',
           password: 'bones'
         })
+      })
+
+      afterEach(async () => {
+        await User.destroy({
+          where: {
+            email: 'cody@puppybook.com'
+          }
+        });
       })
 
       it('returns true if the password is correct', () => {
