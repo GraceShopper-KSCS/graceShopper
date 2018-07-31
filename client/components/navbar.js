@@ -7,7 +7,7 @@ import SelectCategory from './selectCatagory'
 
 import {fetchCart, mergeCartThunk} from '../store/cart'
 
-import {getSelectCat} from '../store/products'
+import {getSelectCat, setFilteredThunk} from '../store/products'
 
 import {getHistoryThunk} from '../store/history'
 
@@ -16,47 +16,60 @@ const Navbar = ({
   isLoggedIn,
   getSelectCat,
   fetchCart,
-  mergeCartThunk
+  mergeCartThunk,
+  setFilteredThunk
 }) => (
   <div>
     <h1>Codebrary</h1>
-    <nav>
-      <Link
-        to="/books"
-        onClick={() => {
-          getSelectCat('')
-          setFilteredThunk()
-        }}
-      >
-        All books
-      </Link>
-
-      <Link to="/cart" onClick={() => fetchCart()}>
-        View Cart{' '}
-      </Link>
-
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/orders/history">
-            <button type="button" onClick={() => this.props.getHistoryThunk()}>
-              See Order History
-            </button>
+    <div>
+      <nav className="row">
+        <div className="nav-item">
+          <Link
+            to="/books"
+            onClick={() => {
+              getSelectCat('')
+              setFilteredThunk()
+            }}
+          >
+            All books
           </Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
         </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
+        <div className="nav-item">
+          <Link to="/cart" onClick={() => fetchCart()}>
+            View Cart{' '}
+          </Link>
+        </div>
 
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
+        {isLoggedIn ? (
+          <div>
+            {/* The navbar will show these links after you log in */}
+
+            <Link to="/home">Home</Link>
+
+            <Link to="/orders/history">
+              {/* <button
+                type="button"
+                onClick={() => this.props.getHistoryThunk()}
+              > */}
+              See Order History
+              {/* </button> */}
+            </Link>
+
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
+        ) : (
+          <div>
+            {/* The navbar will show these links before you log in */}
+
+            <Link to="/login">Login</Link>
+
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        )}
+      </nav>
+    </div>
     <hr />
   </div>
 )
@@ -83,7 +96,8 @@ const mapDispatch = dispatch => {
     getHistoryThunk: () => dispatch(getHistoryThunk()),
 
     mergeCartThunk: () => dispatch(mergeCartThunk()),
-    me: () => dispatch(me())
+    me: () => dispatch(me()),
+    setFilteredThunk: () => dispatch(setFilteredThunk())
   }
 }
 

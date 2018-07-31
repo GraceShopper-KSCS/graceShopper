@@ -37,7 +37,7 @@ class SelectCategory extends Component {
     return (
       <div>
         <form onSubmit={this.props.handleSubmit}>
-          <label>Choose category</label>
+          {/* <label>Choose category</label> */}
           <select name="category" onChange={this.handleChange} value={category}>
             <option value="">Choose Category</option>
             {console.log('CATS______', this.props.categories)}

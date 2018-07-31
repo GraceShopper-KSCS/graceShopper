@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import ProductCard from './productCard'
-import { connect } from 'react-redux'
-import { fetchCart, emptyCartThunk } from '../store/cart'
-import { getHistoryThunk } from '../store/history'
-import { Link } from 'react-router-dom'
-
+import {connect} from 'react-redux'
+import {fetchCart, emptyCartThunk} from '../store/cart'
+import {getHistoryThunk} from '../store/history'
+import {Link} from 'react-router-dom'
 
 class ViewCart extends Component {
   constructor() {
@@ -15,6 +14,7 @@ class ViewCart extends Component {
     console.log('======>', this.props.cart)
   }
   render() {
+    const user = this.props.user
     let totalPrice = 0
     if (!this.props.cart.length) {
       return (
@@ -31,7 +31,10 @@ class ViewCart extends Component {
               Empty Cart
             </button>
             {this.props.cart.map(book => {
-              totalPrice += book.price * 100
+              console.log('USER', user)
+              user && user.id
+                ? (totalPrice += book.price * book.productorder.quantity)
+                : (totalPrice += book.price * book.quantity)
               return <ProductCard key={book.id} product={book} />
             })}
           </div>
@@ -50,7 +53,7 @@ class ViewCart extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.cart.cart,
-    user: state.user.user
+    user: state.user
   }
 }
 
