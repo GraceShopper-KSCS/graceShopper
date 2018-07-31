@@ -7,6 +7,7 @@ const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const EMPTY_CART = 'EMPTY_CART'
+const GET_TOTAL_PRICE = 'GET_TOTAL_PRICE'
 
 
 
@@ -15,7 +16,8 @@ const EMPTY_CART = 'EMPTY_CART'
  */
 const initialState = {
   cart: [],
-  selectedProduct: {}
+  selectedProduct: {},
+  totalPrice: 0
 }
 
 /**
@@ -24,6 +26,11 @@ const initialState = {
 export const getCart = cart => ({
   type: GET_CART,
   cart
+})
+
+export const getSum = totalPrice => ({
+  type: GET_TOTAL_PRICE,
+  totalPrice
 })
 
 
@@ -46,6 +53,15 @@ export const fetchCart = () => async dispatch => {
   try {
     const res = await axios.get('/api/cart')
     dispatch(getCart(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const fetchTotalSum = () => async dispatch => {
+  try {
+    const sum = await axios.get('/api/orders/totalprice')
+    dispatch(getSum(sum.data))
   } catch (err) {
     console.error(err)
   }
@@ -121,7 +137,9 @@ export default function (state = initialState, action) {
     case EMPTY_CART: {
       return { ...state, cart: [] }
     }
-
+    case GET_TOTAL_PRICE: {
+      return { ...state, totalPrice: action.totalPrice }
+    }
     default:
       return state
   }
