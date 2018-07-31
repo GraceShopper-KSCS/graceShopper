@@ -9,6 +9,7 @@ const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const EMPTY_CART = 'EMPTY_CART'
 
 
+
 /**
  * INITIAL STATE
  */
@@ -24,6 +25,7 @@ export const getCart = cart => ({
   type: GET_CART,
   cart
 })
+
 
 export const addToCart = product => ({ type: ADD_TO_CART, product })
 
@@ -99,7 +101,13 @@ export default function (state = initialState, action) {
       const product = state.cart.find(product => product.id === action.product.id)
       if (product) {
         const newcart = state.cart.filter(item => item.id !== product.id)
-        product.quantity++
+        if (product.productorder) {
+          product.productorder.quantity++
+        }
+        else {
+
+          product.quantity++
+        }
         return { ...state, cart: [...newcart, product] }
 
       }
@@ -113,6 +121,7 @@ export default function (state = initialState, action) {
     case EMPTY_CART: {
       return { ...state, cart: [] }
     }
+
     default:
       return state
   }
