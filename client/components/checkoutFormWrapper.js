@@ -13,7 +13,6 @@ class CheckoutFormWrapper extends Component {
   }
 
   render() {
-    console.log(this.props, '<----------')
     return (
       <div>
         <StripeProvider apiKey="pk_test_FWLSZzdWrAYHVOtT0uWNPivM">

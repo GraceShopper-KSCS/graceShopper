@@ -12,6 +12,7 @@ class ViewCart extends Component {
     await this.props.fetchCart()
   }
   render() {
+    let totalPrice = 0
     if (!this.props.cart.length) {
       return (
         <div>
@@ -19,8 +20,8 @@ class ViewCart extends Component {
         </div>
       )
     } else {
+      console.log(this.props.cart)
       return (
-        // <StripeProvider apiKey="pk_test_FWLSZzdWrAYHVOtT0uWNPivM">
         <div>
           <div>
             <button>Checkout</button>
@@ -28,10 +29,12 @@ class ViewCart extends Component {
               Empty Cart
             </button>
             {this.props.cart.map(book => {
+              totalPrice += book.price * 100
               return <ProductCard key={book.id} product={book} />
             })}
           </div>
           <div>
+            <h3>Total: {totalPrice}</h3>
             <button>Checkout Cart</button>
           </div>
         </div>
