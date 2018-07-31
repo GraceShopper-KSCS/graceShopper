@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout, me} from '../store'
 import SelectCategory from './selectCatagory'
-import {getSelectCat} from '../store/products'
+import {getSelectCat, setFilteredThunk} from '../store/products'
 import {fetchCart, mergeCartThunk} from '../store/cart'
 import {getHistoryThunk} from '../store/history'
 
@@ -30,7 +30,9 @@ const Navbar = ({
   isLoggedIn,
   getSelectCat,
   fetchCart,
-  mergeCartThunk
+  mergeCartThunk,
+  setFilteredThunk,
+  getHistoryThunk
 }) => (
   <div className="header">
     {/* <h1 className="heading">Codebrary</h1> */}
@@ -61,7 +63,7 @@ const Navbar = ({
             <Link to="/orders/history">
               <button
                 type="button"
-                onClick={() => this.props.getHistoryThunk()}
+                onClick={async () => await getHistoryThunk()}
               >
                 See Order History
               </button>
@@ -104,7 +106,8 @@ const mapDispatch = dispatch => {
 
     getHistoryThunk: () => dispatch(getHistoryThunk()),
 
-    me: () => dispatch(me())
+    me: () => dispatch(me()),
+    setFilteredThunk: () => dispatch(setFilteredThunk())
   }
 }
 
@@ -117,19 +120,3 @@ Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
-
-// import {
-//   getSelectCat,
-//   fetchCategories,
-//   fetchFiltered,
-//   setFilteredThunk
-// } from '../store/products'
-
-// const Navbar = ({
-//   handleClick,
-//   isLoggedIn,
-//   getSelectCat,
-//   fetchFiltered,
-//   setFilteredThunk,
-//   filtered
-// }) => (

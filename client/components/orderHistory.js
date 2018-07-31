@@ -5,24 +5,27 @@ import {getHistoryThunk} from '../store/history'
 
 class OrderHistory extends Component {
   async componentDidMount() {
-    await this.props.getHistoryThunk()
+    const history = await this.props.getHistoryThunk()
+    console.log('HISTORY', history)
   }
   render() {
     const OrderList = this.props.history
-    console.log(OrderList)
-    if (OrderList.length < 1) {
-      return <h4>Your order history is empty</h4>
-    }
-    return (
-      <div>
-        <h3>Order History</h3>
-        {OrderList.map(order => (
-          <div key={order.id}>
-            <Order order={order} />
+    if (OrderList) {
+      if (OrderList.length < 1) {
+        return <h4>Your order history is empty</h4>
+      } else {
+        return (
+          <div>
+            <h3>Order History</h3>
+            {OrderList.map(order => (
+              <div key={order.id}>
+                <Order order={order} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    )
+        )
+      }
+    }
   }
 }
 

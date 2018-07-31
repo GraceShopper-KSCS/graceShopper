@@ -1,6 +1,6 @@
 const router = require('express').Router()
-const { Order, Product, ProductOrder } = require('../db/models')
-const { stripe } = require('../index')
+const {Order, Product, ProductOrder} = require('../db/models')
+const {stripe} = require('../index')
 
 module.exports = router
 
@@ -11,7 +11,7 @@ router.get('/history', async (req, res, next) => {
         userId: req.session.passport.user,
         status: 'complete'
       },
-      include: [{ all: true, nested: true }]
+      include: [{all: true, nested: true}]
     })
 
     res.json(orders)
@@ -29,8 +29,9 @@ router.get('/totalprice', async (req, res, next) => {
       }
     })
 
-
-    const totalPrices = await ProductOrder.findAll({ where: { orderId: order[0].dataValues.id } })
+    const totalPrices = await ProductOrder.findAll({
+      where: {orderId: order[0].dataValues.id}
+    })
     let sum = 0
     totalPrices.forEach(book => {
       sum = book.totalPrice + sum
@@ -40,7 +41,20 @@ router.get('/totalprice', async (req, res, next) => {
   } catch (err) {
     next(err)
   }
+})
 
-
-
+router.put('/', async (req, res, next) => {
+  try {
+    console.log('USER', req.user.dataValues.id)
+    const order = await Order.findOne({
+      where: {
+        userId: req.user.id,
+        status: 'pending'
+      }
+    })
+    const updatedOrder = await order.update({status: 'complete'})
+    res.json(updatedOrder)
+  } catch (err) {
+    next(err)
+  }
 })

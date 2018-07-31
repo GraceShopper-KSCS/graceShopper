@@ -17,7 +17,7 @@ class ViewCart extends Component {
   }
   async componentDidMount() {
     const cart = await this.props.fetchCart()
-    if (this.props.cart[0].productorder) {
+    if (this.props.cart[0] && this.props.cart[0].productorder) {
       this.props.fetchTotalSum()
     }
   }

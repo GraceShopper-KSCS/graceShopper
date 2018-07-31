@@ -3,6 +3,8 @@ import Checkout from './checkout'
 import React, {Component} from 'react'
 import {CardElement, injectStripe} from 'react-stripe-elements'
 import StripeCheckout from 'react-stripe-checkout'
+import {submitOrderThunk} from '../store/history'
+import {connect} from 'react-redux'
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -22,15 +24,19 @@ class CheckoutForm extends Component {
     await this.setState({[event.target.name]: event.target.value})
   }
 
-  async submit(ev) {
+  async submit(evt) {
     let {token} = await this.props.stripe.createToken({name: 'Name'})
     let response = await fetch('/charge', {
       method: 'POST',
       headers: {'Content-Type': 'text/plain'},
       body: token.id
     })
+    console.log('RESPONSE', response)
 
-    if (response.ok) console.log('Purchase Complete!')
+    if (response.ok) {
+      await submitOrderThunk()
+      console.log('WATERMELLON, Purchase Complete!')
+    }
   }
 
   render() {
@@ -60,7 +66,7 @@ class CheckoutForm extends Component {
           />
           <input
             type="text"
-            placeholder="Addrss"
+            placeholder="Address"
             name="address"
             value={address}
             onChange={this.handleChange}
@@ -81,12 +87,27 @@ class CheckoutForm extends Component {
           />
         </div>
         <div>
-          <h6>Total price to pay: {totalPrice}</h6>
-          <Checkout />
+          <h6>Total price to pay: ${this.props.totalPrice / 100}</h6>
+          <Checkout submitOrder={this.props.submitOrderThunk} />
         </div>
       </div>
     )
   }
 }
 
-export default CheckoutForm
+const mapStateToProps = state => {
+  return {
+    totalPrice: state.cart.totalPrice
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchCart: () => dispatch(fetchCart()),
+    emptyCartThunk: () => dispatch(emptyCartThunk()),
+    fetchTotalSum: () => dispatch(fetchTotalSum()),
+    submitOrderThunk: () => dispatch(submitOrderThunk())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)

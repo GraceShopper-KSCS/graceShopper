@@ -2,10 +2,10 @@ import React from 'react'
 import ProductCard from './productCard'
 
 const Order = props => {
-  console.log(props)
+  console.log('**PROPS', props)
   const order = props.order
   const products = order.products
-  return (
+  return products ? (
     <div>
       <h4>Order ID: {order.id}</h4>
       <h4>Order Status: {order.status}</h4>
@@ -17,7 +17,7 @@ const Order = props => {
         </div>
       ))}
     </div>
-  )
+  ) : null
 }
 
 export default Order
