@@ -63,26 +63,17 @@ class ViewCart extends Component {
               ? <h3>Total: ${this.props.totalPrice / 100}</h3>
               : <h3>Total: ${totalPrice.toFixed(2)}</h3>
             }
-
-
-            <Link to="/checkout">
-              <button>Checkout Cart</button>
-            </Link>
-            })}
           </div>
           <div>
 
-
             {this.props.user.id ? (
               <div>
-                <h3>Total: {totalPrice}</h3>
                 <Link to="/checkout">
                   <button>Checkout Cart</button>
                 </Link>
               </div>
             ) : (
                 <div>
-                  <h3>Total: ${totalPrice.toFixed(2)}</h3>
                   <button onClick={() => this.loginPropmp()}>Checkout Cart</button>
                 </div>
               )}
