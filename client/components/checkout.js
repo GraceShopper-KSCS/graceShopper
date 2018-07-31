@@ -41,7 +41,6 @@ const Checkout = ({
   submitOrder
 } = props) => (
   <div>
-    <h3>Component Below</h3>
     <StripeCheckout
       email={name}
       // description={description}

@@ -60,14 +60,7 @@ const Navbar = ({
             <Link to="/home" className="active">
               Home
             </Link>
-            <Link to="/orders/history">
-              <button
-                type="button"
-                onClick={async () => await getHistoryThunk()}
-              >
-                See Order History
-              </button>
-            </Link>
+            <Link to="/orders/history">See Order History</Link>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
