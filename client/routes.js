@@ -36,12 +36,12 @@ class Routes extends Component {
           <Route path="/cart" component={viewCart} />
           <Route path="/orders/history" component={OrderHistory} />
           <Route path="/addReviews" component={AddReviews} />
-          <Route path="/checkout" component={CheckoutFormWrapper} />
           {isLoggedIn && (
             <Switch>
               {/* Routes placed here are only available after logging in */}
               <Route path="/home" component={UserHome} />
               {isAdmin ? <Route path="/add" component={AddProduct} /> : null}
+              <Route path="/checkout" component={CheckoutFormWrapper} />
             </Switch>
           )}
           {/* Displays our Login component as a fallback */}

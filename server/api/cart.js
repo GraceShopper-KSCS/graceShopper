@@ -45,10 +45,12 @@ router.post('/', async (req, res, next) => {
         if (product) {
           const index = req.session.cart.indexOf(product)
           req.session.cart[index].quantity++
+          req.session.cart[index].totalprice = req.session.cart[index].quantity * req.body.price
           res.json(req.session.cart[index])
         }
         else {
           req.body.quantity = 1
+          req.body.totalprice = 1 * req.body.price
           req.session.cart.push(req.body)
           res.json(req.session.cart[req.session.cart.length - 1])
         }
@@ -61,14 +63,12 @@ router.post('/', async (req, res, next) => {
       }
     } else {
       const product = req.body
-      console.log('product===>', product)
       const order = await Order.findOne({ where: { userId: req.user.id, status: "pending" } })
-      console.log('order', order)
+
       const existProduct = await ProductOrder.findOne({ where: { productId: product.id, orderId: order.id } })
       if (existProduct) {
-        const updatedProduct = await existProduct.update({ quantity: existProduct.quantity + product.quantity })
+        const updatedProduct = await existProduct.update({ quantity: existProduct.quantity + 1 })
         res.json(updatedProduct)
-
       }
       else {
         product.quantity = 1
@@ -93,6 +93,7 @@ router.put('/decquantity/:id', async (req, res, next) => {
   if (!req.user) {
     const product = req.session.cart.find(product => product.id === id)
     const index = req.session.cart.indexOf(product)
+    req.session.cart[index].totalprice = req.session.cart[index].totalprice - req.session.cart[index].price
     req.session.cart[index].quantity--
     res.json(req.session.cart[index].quantity)
   }
@@ -110,6 +111,7 @@ router.put('/incquantity/:id', async (req, res, next) => {
   if (!req.user) {
     const product = req.session.cart.find(product => product.id === id)
     const index = req.session.cart.indexOf(product)
+    req.session.cart[index].totalprice = req.session.cart[index].totalprice + req.session.cart[index].price
     if (!req.session.cart[index].quantity) {
       req.session.cart[index].quantity = 1
     } else {
@@ -181,14 +183,14 @@ router.delete('/', async (req, res, next) => {
 
 router.post('/charge', async (req, res) => {
   try {
-    let {status} = await stripe.charges.create({
+    let { status } = await stripe.charges.create({
       amount: 2000,
       currency: 'usd',
       description: 'An example charge',
       source: req.body
     })
 
-    res.json({status})
+    res.json({ status })
   } catch (err) {
     res.status(500).end()
   }
