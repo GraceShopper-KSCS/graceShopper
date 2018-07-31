@@ -5,8 +5,9 @@ import {Link} from 'react-router-dom'
 import {logout, me} from '../store'
 import SelectCategory from './selectCatagory'
 
-import {getSelectCat} from '../store/products'
 import {fetchCart, mergeCartThunk} from '../store/cart'
+
+import {getSelectCat} from '../store/products'
 
 import {getHistoryThunk} from '../store/history'
 

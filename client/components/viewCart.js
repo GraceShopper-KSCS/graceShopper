@@ -15,6 +15,7 @@ class ViewCart extends Component {
     console.log('======>', this.props.cart)
   }
   render() {
+    let totalPrice = 0
     if (!this.props.cart.length) {
       return (
         <div>
@@ -24,12 +25,22 @@ class ViewCart extends Component {
     } else {
       return (
         <div>
-          <button type="button" onClick={() => this.props.emptyCartThunk()}>
-            Empty Cart
-          </button>
-          {this.props.cart.map(book => {
-            return <ProductCard key={book.id} product={book} />
-          })}
+          <div>
+            <button>Checkout</button>
+            <button type="button" onClick={() => this.props.emptyCartThunk()}>
+              Empty Cart
+            </button>
+            {this.props.cart.map(book => {
+              totalPrice += book.price * 100
+              return <ProductCard key={book.id} product={book} />
+            })}
+          </div>
+          <div>
+            <h3>Total: {totalPrice}</h3>
+            <Link to="/checkout">
+              <button>Checkout Cart</button>
+            </Link>
+          </div>
         </div>
       )
     }
@@ -38,7 +49,8 @@ class ViewCart extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart.cart
+    cart: state.cart.cart,
+    user: state.user.user
   }
 }
 
