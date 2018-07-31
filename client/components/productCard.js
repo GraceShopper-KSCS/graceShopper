@@ -13,7 +13,7 @@ class ProductCard extends Component {
     const product = this.props.product
 
     return (
-      <div className="card">
+      <div className="card col">
         <div className="card-body">
           <Link to={`/books/${product.id}`}>
             <h5 className="card-title">{product.title}</h5>

@@ -42,7 +42,7 @@ class ProductList extends Component {
         return (
           <div>
             <h1> {this.props.selectCategory} Books</h1>
-            <div>
+            <div className="container">
               <SelectCategory handleSubmit={this.handleSubmit} />
               <div className="card-deck">
                 {this.props.filtered.map(product => {
@@ -61,7 +61,7 @@ class ProductList extends Component {
       } else {
         return (
           <div>
-            <h1>All Books</h1>
+            <h1 className="h1-default">All Books</h1>
             <div>
               <SelectCategory handleSubmit={this.handleSubmit} />
               <div className="card-deck">
