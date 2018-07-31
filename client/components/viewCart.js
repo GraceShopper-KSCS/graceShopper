@@ -12,7 +12,7 @@ class ViewCart extends Component {
   }
   async componentDidMount() {
     const cart = await this.props.fetchCart()
-    console.log('======>', this.props.cart)
+
   }
   render() {
     let totalPrice = 0
@@ -31,12 +31,16 @@ class ViewCart extends Component {
               Empty Cart
             </button>
             {this.props.cart.map(book => {
-              totalPrice += book.price * 100
+
+              totalPrice += book.totalprice
+
+
+
               return <ProductCard key={book.id} product={book} />
             })}
           </div>
           <div>
-            <h3>Total: {totalPrice}</h3>
+            <h3>Total: ${totalPrice.toFixed(2)}</h3>
             <Link to="/checkout">
               <button>Checkout Cart</button>
             </Link>
