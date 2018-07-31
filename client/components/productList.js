@@ -40,10 +40,14 @@ class ProductList extends Component {
     if (this.props.products && this.props.products.length) {
       if (this.props.filtered && this.props.filtered.length) {
         return (
-          <div>
-            <h1> {this.props.selectCategory} Books</h1>
+          <div className="flex">
             <div>
+              <h1> {this.props.selectCategory} Books</h1>
+            </div>
+            {/* <div>
               <SelectCategory handleSubmit={this.handleSubmit} />
+            </div> */}
+            <div>
               {this.props.filtered.map(product => {
                 return (
                   <ProductCard

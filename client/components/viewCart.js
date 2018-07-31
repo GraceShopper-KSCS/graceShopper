@@ -24,6 +24,7 @@ class ViewCart extends Component {
     }
   }
   render() {
+    const user = this.props.user
     let totalPrice = 0
     if (!this.props.cart.length) {
       return (
@@ -40,28 +41,26 @@ class ViewCart extends Component {
               Empty Cart
             </button>
             {this.props.cart.map(book => {
-
               totalPrice += book.totalprice
               return <ProductCard key={book.id} product={book} />
             })}
           </div>
           <div>
-
-            
             {this.props.user.id ? (
               <div>
-              <h3>Total: {totalPrice}</h3>
-              <Link to="/checkout">
-                <button>Checkout Cart</button>
-              </Link>
+                <h3>Total: {totalPrice}</h3>
+                <Link to="/checkout">
+                  <button>Checkout Cart</button>
+                </Link>
               </div>
             ) : (
               <div>
-              <h3>Total: ${totalPrice.toFixed(2)}</h3>
-              <button onClick={() => this.loginPropmp()}>Checkout Cart</button>
+                <h3>Total: ${totalPrice.toFixed(2)}</h3>
+                <button onClick={() => this.loginPropmp()}>
+                  Checkout Cart
+                </button>
               </div>
             )}
-
           </div>
         </div>
       )

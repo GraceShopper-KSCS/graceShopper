@@ -19,3 +19,102 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.container-fluid {
+  display: 'flex';
+  flex-flow: row-wrap;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+/*
+.nav-item {
+  height: 1.5em;
+  margin: 0 1.5em 0 0;
+} */
+
+nav {
+  background-color: turquoise;
+  align-content: space-evenly;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+nav a:hover {
+  color: white;
+}
+
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+form {
+  margin: 10px;
+  padding: 10px;
+}
+select {
+  margin: 10px;
+  padding: 10px;
+}
+
+option {
+  margin: 10px;
+  padding: 10px;
+}
+
+label {
+  margin: 10px;
+  padding: 10px;
+}
+
+button {
+  padding: 10px;
+  margin: 10px;
+}
+
+img {
+  height: 300px;
+  width: auto;
+}
+
+.img-card {
+  position: calc(100% - 20px);
+  margin: 5px;
+}
+
+h1 {
+  padding-left: 20px;
+  margin: 20px;
+}
+
+.card-container {
+  width: 400px;
+  height: 400px;
+  border: 2px solid black;
+  padding: 5px;
+  flex-direction: column;
+}
+
+button {
+  height: 2em;
+  width: 8em;
+  /* margin: 10px; */
+  /* font-size: 1.1em;
+  border-radius: 5px;
+  color: white;
+  background-color: navy;
+  text-decoration: none;
+  text-align: center;
+  padding: 5px;
+  margin-top: 10px; */
+}
