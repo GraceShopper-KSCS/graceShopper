@@ -21,6 +21,41 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+div {
+  display: inline;
+}
+
+.card-deck {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: outo;
+}
+constainer {
+  display: flex;
+}
+
+.card-img-top {
+  max-width: 18rem;
+}
+.card {
+  max-width: 25rem;
+
+  /* display: flex; */
+  flex-direction: column;
+  display: inline-block;
+}
+
+.container {
+  margin-bottom: 5em;
+}
+
+.total {
+  bottom: 0;
+  margin-left: 1rem;
+  align-self: flex-start;
+}
 .header {
   display: inline;
 }

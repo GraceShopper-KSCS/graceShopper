@@ -13,31 +13,35 @@ class ProductCard extends Component {
     const product = this.props.product
 
     return (
-      <div className="col">
-        <Link to={`/books/${product.id}`}>
-          <h3>{product.title}</h3>
-        </Link>
-        <Link to={`/books/${product.id}`}>
-          <img src={product.imageUrl} />
-        </Link>
-        {!this.props.location.pathname.includes('cart') ? (
-          <button
-            type="button"
-            onClick={async () => await this.props.addToCartThunk(product)}
-          >
-            Add To Cart
-          </button>
-        ) : (
-          <div>
+      <div className="card col">
+        <div className="card-body">
+          <Link to={`/books/${product.id}`}>
+            <h5 className="card-title">{product.title}</h5>
+          </Link>
+          <Link to={`/books/${product.id}`}>
+            <img className="card-img-top" src={product.imageUrl} />
+          </Link>
+          {!this.props.location.pathname.includes('cart') ? (
             <button
               type="button"
-              onClick={() => this.props.removeFromCartThunk(product.id)}
+              onClick={async () => await this.props.addToCartThunk(product)}
+              className="btn btn-outline-info"
             >
-              Remove from cart
+              Add To Cart
             </button>
-            <Quantity product={product} />
-          </div>
-        )}
+          ) : (
+            <div>
+              <button
+                type="button"
+                onClick={() => this.props.removeFromCartThunk(product.id)}
+                className="btn btn-outline-info"
+              >
+                Remove Item
+              </button>
+              <Quantity product={product} />
+            </div>
+          )}
+        </div>
       </div>
     )
   }
