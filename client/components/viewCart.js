@@ -3,8 +3,11 @@ import ProductCard from './productCard'
 import { connect } from 'react-redux'
 import { fetchCart, emptyCartThunk, fetchTotalSum } from '../store/cart'
 import { getHistoryThunk } from '../store/history'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
+
+
+import { Link, Redirect } from 'react-router-dom'
+
 
 class ViewCart extends Component {
   constructor() {
@@ -19,6 +22,18 @@ class ViewCart extends Component {
       this.props.fetchTotalSum()
     }
 
+    this.loginPropmp = this.loginPropmp.bind(this)
+  }
+
+
+  loginPropmp = () => {
+    //const login = confirm('Please log in')
+    if (window.confirm('Please log in')) {
+      console.log('User cliked OK')
+      this.props.history.push('/login')
+    } else {
+      console.log('User clicked cancel')
+    }
   }
   render() {
     console.log('total', this.state.totalorderprice)
@@ -53,6 +68,24 @@ class ViewCart extends Component {
             <Link to="/checkout">
               <button>Checkout Cart</button>
             </Link>
+            })}
+          </div>
+          <div>
+
+
+            {this.props.user.id ? (
+              <div>
+                <h3>Total: {totalPrice}</h3>
+                <Link to="/checkout">
+                  <button>Checkout Cart</button>
+                </Link>
+              </div>
+            ) : (
+                <div>
+                  <h3>Total: ${totalPrice.toFixed(2)}</h3>
+                  <button onClick={() => this.loginPropmp()}>Checkout Cart</button>
+                </div>
+              )}
           </div>
         </div >
       )
@@ -63,8 +96,8 @@ class ViewCart extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.cart.cart,
-    user: state.user.user,
-    totalPrice: state.cart.totalPrice
+    totalPrice: state.cart.totalPrice,
+    user: state.user
   }
 }
 
