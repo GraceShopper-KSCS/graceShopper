@@ -1,18 +1,27 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import ProductCard from './productCard'
-import { connect } from 'react-redux'
-import { fetchCart, emptyCartThunk } from '../store/cart'
-import { getHistoryThunk } from '../store/history'
-import { Link } from 'react-router-dom'
-
+import {connect} from 'react-redux'
+import {fetchCart, emptyCartThunk} from '../store/cart'
+import {getHistoryThunk} from '../store/history'
+import {Link, Redirect} from 'react-router-dom'
 
 class ViewCart extends Component {
   constructor() {
     super()
+    this.loginPropmp = this.loginPropmp.bind(this)
   }
   async componentDidMount() {
     const cart = await this.props.fetchCart()
-    console.log('======>', this.props.cart)
+  }
+
+  loginPropmp = () => {
+    //const login = confirm('Please log in')
+    if (window.confirm('Please log in')) {
+      console.log('User cliked OK')
+      this.props.history.push('/login')
+    } else {
+      console.log('User clicked cancel')
+    }
   }
   render() {
     let totalPrice = 0
@@ -31,15 +40,28 @@ class ViewCart extends Component {
               Empty Cart
             </button>
             {this.props.cart.map(book => {
-              totalPrice += book.price * 100
+
+              totalPrice += book.totalprice
               return <ProductCard key={book.id} product={book} />
             })}
           </div>
           <div>
-            <h3>Total: {totalPrice}</h3>
-            <Link to="/checkout">
-              <button>Checkout Cart</button>
-            </Link>
+
+            
+            {this.props.user.id ? (
+              <div>
+              <h3>Total: {totalPrice}</h3>
+              <Link to="/checkout">
+                <button>Checkout Cart</button>
+              </Link>
+              </div>
+            ) : (
+              <div>
+              <h3>Total: ${totalPrice.toFixed(2)}</h3>
+              <button onClick={() => this.loginPropmp()}>Checkout Cart</button>
+              </div>
+            )}
+
           </div>
         </div>
       )
@@ -50,7 +72,7 @@ class ViewCart extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.cart.cart,
-    user: state.user.user
+    user: state.user
   }
 }
 

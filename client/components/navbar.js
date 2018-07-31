@@ -4,11 +4,8 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout, me} from '../store'
 import SelectCategory from './selectCatagory'
-
-import {fetchCart, mergeCartThunk} from '../store/cart'
-
 import {getSelectCat} from '../store/products'
-
+import {fetchCart, mergeCartThunk} from '../store/cart'
 import {getHistoryThunk} from '../store/history'
 
 const Navbar = ({
@@ -82,7 +79,6 @@ const mapDispatch = dispatch => {
 
     getHistoryThunk: () => dispatch(getHistoryThunk()),
 
-    mergeCartThunk: () => dispatch(mergeCartThunk()),
     me: () => dispatch(me())
   }
 }
