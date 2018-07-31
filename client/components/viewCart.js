@@ -20,7 +20,6 @@ class ViewCart extends Component {
         </div>
       )
     } else {
-      console.log(this.props.cart)
       return (
         <div>
           <div>

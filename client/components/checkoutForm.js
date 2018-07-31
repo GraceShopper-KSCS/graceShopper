@@ -36,8 +36,13 @@ class CheckoutForm extends Component {
   render() {
     if (this.state.complete) return <h1>Purchase Complete</h1>
     const {firstName, lastName, address, country, zipCode} = this.state
+    const {user, cartItems} = this.props
+    let totalPrice = 0
+    cartItems.cart.map(item => (totalPrice += Number(item.price) * 100))
+
     return (
       <div className="checkout">
+        <h4>{user.email} please fill out your billing information:</h4>
         <div>
           <input
             type="text"
@@ -75,8 +80,10 @@ class CheckoutForm extends Component {
             onChange={this.handleChange}
           />
         </div>
-
-        <Checkout />
+        <div>
+          <h6>Total price to pay: {totalPrice}</h6>
+          <Checkout />
+        </div>
       </div>
     )
   }
