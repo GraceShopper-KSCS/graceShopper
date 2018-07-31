@@ -17,15 +17,14 @@ class ViewCart extends Component {
   loginPropmp = () => {
     //const login = confirm('Please log in')
     if (window.confirm('Please log in')) {
-      console.log('DADADA')
+      console.log('User cliked OK')
       this.props.history.push('/login')
     } else {
-      console.log('TOO BAD')
+      console.log('User clicked cancel')
     }
   }
   render() {
     let totalPrice = 0
-    console.log('>>>USER>>>', this.props.user)
     if (!this.props.cart.length) {
       return (
         <div>
@@ -41,19 +40,28 @@ class ViewCart extends Component {
               Empty Cart
             </button>
             {this.props.cart.map(book => {
-              totalPrice += book.price * 100
+
+              totalPrice += book.totalprice
               return <ProductCard key={book.id} product={book} />
             })}
           </div>
           <div>
-            <h3>Total: {totalPrice}</h3>
+
+            
             {this.props.user.id ? (
+              <div>
+              <h3>Total: {totalPrice}</h3>
               <Link to="/checkout">
                 <button>Checkout Cart</button>
               </Link>
+              </div>
             ) : (
+              <div>
+              <h3>Total: ${totalPrice.toFixed(2)}</h3>
               <button onClick={() => this.loginPropmp()}>Checkout Cart</button>
+              </div>
             )}
+
           </div>
         </div>
       )
