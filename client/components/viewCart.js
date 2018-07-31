@@ -20,13 +20,20 @@ class ViewCart extends Component {
       )
     } else {
       return (
+        // <StripeProvider apiKey="pk_test_FWLSZzdWrAYHVOtT0uWNPivM">
         <div>
-          <button type="button" onClick={() => this.props.emptyCartThunk()}>
-            Empty Cart
-          </button>
-          {this.props.cart.map(book => {
-            return <ProductCard key={book.id} product={book} />
-          })}
+          <div>
+            <button>Checkout</button>
+            <button type="button" onClick={() => this.props.emptyCartThunk()}>
+              Empty Cart
+            </button>
+            {this.props.cart.map(book => {
+              return <ProductCard key={book.id} product={book} />
+            })}
+          </div>
+          <div>
+            <button>Checkout Cart</button>
+          </div>
         </div>
       )
     }
@@ -35,7 +42,8 @@ class ViewCart extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart.cart
+    cart: state.cart.cart,
+    user: state.user.user
   }
 }
 
