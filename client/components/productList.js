@@ -47,7 +47,7 @@ class ProductList extends Component {
             {/* <div>
               <SelectCategory handleSubmit={this.handleSubmit} />
             </div> */}
-            <div className="flex">
+            <div>
               {this.props.filtered.map(product => {
                 return (
                   <ProductCard
