@@ -1,6 +1,6 @@
 # graceShopper
 
-##Our first e-commerce app
+## Our first e-commerce app
 
 -Kate
 
@@ -10,9 +10,9 @@
 
 -sivan gilead
 
-# npm install
-# npm run seed
-# npm run start-dev
+### npm install
+### npm run seed
+### npm run start-dev
 
 
 
