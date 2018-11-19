@@ -1,19 +1,27 @@
-# graceShopper
+# Codebrary
 
-## Our first e-commerce app
+## Getting Started
+To run this app locally:
+1. npm install
+2. npm run seed
+3. npm run start-dev
 
--Kate
+## Built With
+* Javascript
+* HTML
+* CSS
+* React-Redux
+* Node.js
+* Express
+* Webpack
+* PostgreSQL
+* Sequalize
 
--Surbhi
-
--Claire!
-
--sivan gilead
-
-### npm install
-### npm run seed
-### npm run start-dev
-
+## Authors
+* Kate Liyah Dubitski Kopitchinski
+* Surbhi Gupta
+* Claire Watson
+* Sivan Gilead
 
 ## Deployed on Heroku
 https://codebrary.herokuapp.com/
